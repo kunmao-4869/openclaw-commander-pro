@@ -1,0 +1,495 @@
+# 代码示例：array-containers-in-unreal-engine
+
+> 来源：https://dev.epicgames.com/documentation/unreal-engine/array-containers-in-unreal-engine
+> 提取时间：2026/4/14 11:43:34
+
+---
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 1
+
+**语言**: cpp
+
+```cpp
+TArray<int32> IntArray;
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 2
+
+**语言**: cpp
+
+```cpp
+IntArray.Init(10, 5);	// IntArray == [10,10,10,10,10]
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 3
+
+**语言**: cpp
+
+```cpp
+TArray<FString> StrArr;	StrArr.Add    (TEXT("Hello"));	StrArr.Emplace(TEXT("World"));	// StrArr == ["Hello","World"]
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 4
+
+**语言**: cpp
+
+```cpp
+FString Arr[] = { TEXT("of"), TEXT("Tomorrow") };	StrArr.Append(Arr, ARRAY_COUNT(Arr));	// StrArr == ["Hello","World","of","Tomorrow"]
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 5
+
+**语言**: cpp
+
+```cpp
+StrArr.AddUnique(TEXT("!"));	// StrArr == ["Hello","World","of","Tomorrow","!"] 	StrArr.AddUnique(TEXT("!"));	// StrArr is unchanged as "!" is already an element
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 6
+
+**语言**: cpp
+
+```cpp
+StrArr.Insert(TEXT("Brave"), 1);	// StrArr == ["Hello","Brave","World","of","Tomorrow","!"]
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 7
+
+**语言**: cpp
+
+```cpp
+StrArr.SetNum(8);	// StrArr == ["Hello","Brave","World","of","Tomorrow","!","",""]
+```
+
+## 创建和填充数组 - 如要创建数组，将其以此定义： 8
+
+**语言**: cpp
+
+```cpp
+StrArr.SetNum(6);	// StrArr == ["Hello","Brave","World","of","Tomorrow","!"]
+```
+
+## 迭代 - 有多种方法可迭代数组的元素，建议使用C++的范围（ranged-for）功能： 9
+
+**语言**: cpp
+
+```cpp
+FString JoinedStr;	for (auto& Str : StrArr)	{		JoinedStr += Str;		JoinedStr += TEXT(" ");	}	// JoinedStr == "Hello Brave World of Tomorrow ! "
+```
+
+## 迭代 - 有多种方法可迭代数组的元素，建议使用C++的范围（ranged-for）功能： 10
+
+**语言**: cpp
+
+```cpp
+for (int32 Index = 0; Index != StrArr.Num(); ++Index)	{		JoinedStr += StrArr[Index];		JoinedStr += TEXT(" ");	}
+```
+
+## 迭代 - 有多种方法可迭代数组的元素，建议使用C++的范围（ranged-for）功能： 11
+
+**语言**: cpp
+
+```cpp
+for (auto It = StrArr.CreateConstIterator(); It; ++It)	{		JoinedStr += *It;		JoinedStr += TEXT(" ");	}
+```
+
+## 排序 - 通过调用Sort函数可以简单地对数组进行排序： 12
+
+**语言**: cpp
+
+```cpp
+StrArr.Sort();	// StrArr == ["!","Brave","Hello","of","Tomorrow","World"]
+```
+
+## 排序 - 通过调用Sort函数可以简单地对数组进行排序： 13
+
+**语言**: cpp
+
+```cpp
+StrArr.Sort([](const FString& A, const FString& B) {		return A.Len() < B.Len();	});	// StrArr == ["!","of","Hello","Brave","World","Tomorrow"]
+```
+
+## 排序 - 通过调用Sort函数可以简单地对数组进行排序： 14
+
+**语言**: cpp
+
+```cpp
+StrArr.HeapSort([](const FString& A, const FString& B) {		return A.Len() < B.Len();	});	// StrArr == ["!","of","Hello","Brave","World","Tomorrow"]
+```
+
+## 排序 - 通过调用Sort函数可以简单地对数组进行排序： 15
+
+**语言**: cpp
+
+```cpp
+StrArr.StableSort([](const FString& A, const FString& B) {		return A.Len() < B.Len();	});	// StrArr == ["!","of","Brave","Hello","World","Tomorrow"]
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 16
+
+**语言**: cpp
+
+```cpp
+int32 Count = StrArr.Num();	// Count == 6
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 17
+
+**语言**: cpp
+
+```cpp
+FString* StrPtr = StrArr.GetData();	// StrPtr[0] == "!"	// StrPtr[1] == "of"	// ...	// StrPtr[5] == "Tomorrow"	// StrPtr[6] - undefined behavior
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 18
+
+**语言**: cpp
+
+```cpp
+uint32 ElementSize = StrArr.GetTypeSize();	// ElementSize == sizeof(FString)
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 19
+
+**语言**: cpp
+
+```cpp
+FString Elem1 = StrArr[1];	// Elem1 == "of"
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 20
+
+**语言**: cpp
+
+```cpp
+bool bValidM1 = StrArr.IsValidIndex(-1);	bool bValid0  = StrArr.IsValidIndex(0);	bool bValid5  = StrArr.IsValidIndex(5);	bool bValid6  = StrArr.IsValidIndex(6);	// bValidM1 == false	// bValid0  == true	// bValid5  == true	// bValid6  == false
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 21
+
+**语言**: cpp
+
+```cpp
+StrArr[3] = StrArr[3].ToUpper();	// StrArr == ["!","of","Brave","HELLO","World","Tomorrow"]
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 22
+
+**语言**: cpp
+
+```cpp
+FString ElemEnd  = StrArr.Last();	FString ElemEnd0 = StrArr.Last(0);	FString ElemEnd1 = StrArr.Last(1);	FString ElemTop  = StrArr.Top();	// ElemEnd  == "Tomorrow"	// ElemEnd0 == "Tomorrow"	// ElemEnd1 == "World"	// ElemTop  == "Tomorrow"
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 23
+
+**语言**: cpp
+
+```cpp
+bool bHello   = StrArr.Contains(TEXT("Hello"));	bool bGoodbye = StrArr.Contains(TEXT("Goodbye"));	// bHello   == true	// bGoodbye == false
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 24
+
+**语言**: cpp
+
+```cpp
+bool bLen5 = StrArr.ContainsByPredicate([](const FString& Str){		return Str.Len() == 5;	});	bool bLen6 = StrArr.ContainsByPredicate([](const FString& Str){		return Str.Len() == 6;	});	// bLen5 == true	// bLen6 == false
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 25
+
+**语言**: cpp
+
+```cpp
+int32 Index;	if (StrArr.Find(TEXT("Hello"), Index))	{		// Index == 3	}
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 26
+
+**语言**: cpp
+
+```cpp
+int32 IndexLast;	if (StrArr.FindLast(TEXT("Hello"), IndexLast))	{		// IndexLast == 3, because there aren't any duplicates	}
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 27
+
+**语言**: cpp
+
+```cpp
+int32 Index2     = StrArr.Find(TEXT("Hello"));	int32 IndexLast2 = StrArr.FindLast(TEXT("Hello"));	int32 IndexNone  = StrArr.Find(TEXT("None"));	// Index2     == 3	// IndexLast2 == 3	// IndexNone  == INDEX_NONE
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 28
+
+**语言**: cpp
+
+```cpp
+int32 Index = StrArr.IndexOfByKey(TEXT("Hello"));	// Index == 3
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 29
+
+**语言**: cpp
+
+```cpp
+int32 Index = StrArr.IndexOfByPredicate([](const FString& Str){		return Str.Contains(TEXT("r"));	});	// Index == 2
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 30
+
+**语言**: cpp
+
+```cpp
+auto* OfPtr  = StrArr.FindByKey(TEXT("of")));	auto* ThePtr = StrArr.FindByKey(TEXT("the")));	// OfPtr  == &StrArr[1]	// ThePtr == nullptr
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 31
+
+**语言**: cpp
+
+```cpp
+auto* Len5Ptr = StrArr.FindByPredicate([](const FString& Str){		return Str.Len() == 5;	});	auto* Len6Ptr = StrArr.FindByPredicate([](const FString& Str){		return Str.Len() == 6;	});	// Len5Ptr == &StrArr[2]	// Len6Ptr == nullptr
+```
+
+## 查询 - 我们可以通过使用Num函数来查询数组包含多少个元素： 32
+
+**语言**: cpp
+
+```cpp
+auto Filter = StrArray.FilterByPredicate([](const FString& Str){		return !Str.IsEmpty() && Str[0] < TEXT('M');	});
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 33
+
+**语言**: cpp
+
+```cpp
+TArray<int32> ValArr;	int32 Temp[] = { 10, 20, 30, 5, 10, 15, 20, 25, 30 };	ValArr.Append(Temp, ARRAY_COUNT(Temp));	// ValArr == [10,20,30,5,10,15,20,25,30] 	ValArr.Remove(20);	// ValArr == [10,30,5,10,15,25,30]
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 34
+
+**语言**: cpp
+
+```cpp
+ValArr.RemoveSingle(30);	// ValArr == [10,5,10,15,25,30]
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 35
+
+**语言**: cpp
+
+```cpp
+ValArr.RemoveAt(2); // Removes the element at index 2	// ValArr == [10,5,15,25,30] 	ValArr.RemoveAt(99); // This will cause a runtime error as	                       // there is no element at index 99
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 36
+
+**语言**: cpp
+
+```cpp
+ValArr.RemoveAll([](int32 Val) {		return Val % 3 == 0;	});	// ValArr == [10,5,25]
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 37
+
+```
+TArray<int32> ValArr2;
+	for (int32 i = 0; i != 10; ++i)
+		ValArr2.Add(i % 5);
+	// ValArr2 == [0,1,2,3,4,0,1,2,3,4]
+
+	ValArr2.RemoveSwap(2);
+	// ValArr2 == [0,1,4,3,4,0,1,3]
+
+	ValArr2.RemoveAtSwap(1);
+	// ValArr2 == [0,3,4,3,4,0,1]
+```
+
+## 移除 - 你可以使用Remove系列函数从数组中删除元素。 Remove函数根据元素类型的operator==函数，删除所有被认为等于你提供的元素的元素。 例如： 38
+
+**语言**: cpp
+
+```cpp
+ValArr2.Empty();	// ValArr2 == []
+```
+
+## 运算符 - 数组是常规数值类型，可使用标准复制构造函数或赋值运算符进行复制。 由于数组严格拥有其元素，复制数组的操作是深层的，因此新数组将拥有其自身的元素副本： 39
+
+**语言**: cpp
+
+```cpp
+TArray<int32> ValArr3;	ValArr3.Add(1);	ValArr3.Add(2);	ValArr3.Add(3); 	auto ValArr4 = ValArr3;	// ValArr4 == [1,2,3];	ValArr4[0] = 5;	// ValArr3 == [1,2,3];	// ValArr4 == [5,2,3];
+```
+
+## 运算符 - 数组是常规数值类型，可使用标准复制构造函数或赋值运算符进行复制。 由于数组严格拥有其元素，复制数组的操作是深层的，因此新数组将拥有其自身的元素副本： 40
+
+**语言**: cpp
+
+```cpp
+ValArr4 += ValArr3;	// ValArr4 == [5,2,3,1,2,3]
+```
+
+## 运算符 - 数组是常规数值类型，可使用标准复制构造函数或赋值运算符进行复制。 由于数组严格拥有其元素，复制数组的操作是深层的，因此新数组将拥有其自身的元素副本： 41
+
+**语言**: cpp
+
+```cpp
+ValArr3 = MoveTemp(ValArr4);	// ValArr3 == [5,2,3,1,2,3]	// ValArr4 == []
+```
+
+## 运算符 - 数组是常规数值类型，可使用标准复制构造函数或赋值运算符进行复制。 由于数组严格拥有其元素，复制数组的操作是深层的，因此新数组将拥有其自身的元素副本： 42
+
+```
+TArray<FString> FlavorArr1;
+	FlavorArr1.Emplace(TEXT("Chocolate"));
+	FlavorArr1.Emplace(TEXT("Vanilla"));
+	// FlavorArr1 == ["Chocolate","Vanilla"]
+
+	auto FlavorArr2 = Str1Array;
+	// FlavorArr2 == ["Chocolate","Vanilla"]
+
+	bool bComparison1 = FlavorArr1 == FlavorArr2;
+	// bComparison1 == true
+```
+
+## 堆 - TArray拥有支持二叉堆数据结构的函数。 堆是一种二叉树，其中父节点的排序等于或高于其子节点。 作为数组实现时，树的根节点位于元素0，索引N处节点的左右子节点的指数分别为2N+1和2N+2。 子节点彼此间不存在特定排序。 43
+
+**语言**: cpp
+
+```cpp
+TArray<int32> HeapArr;	for (int32 Val = 10; Val != 0; --Val)	{		HeapArr.Add(Val);	}	// HeapArr == [10,9,8,7,6,5,4,3,2,1]	HeapArr.Heapify();	// HeapArr == [1,2,4,3,6,5,8,10,7,9]
+```
+
+## 堆 - TArray拥有支持二叉堆数据结构的函数。 堆是一种二叉树，其中父节点的排序等于或高于其子节点。 作为数组实现时，树的根节点位于元素0，索引N处节点的左右子节点的指数分别为2N+1和2N+2。 子节点彼此间不存在特定排序。 44
+
+**语言**: cpp
+
+```cpp
+HeapArr.HeapPush(4);	// HeapArr == [1,2,4,3,4,5,8,10,7,9,6]
+```
+
+## 堆 - TArray拥有支持二叉堆数据结构的函数。 堆是一种二叉树，其中父节点的排序等于或高于其子节点。 作为数组实现时，树的根节点位于元素0，索引N处节点的左右子节点的指数分别为2N+1和2N+2。 子节点彼此间不存在特定排序。 45
+
+**语言**: cpp
+
+```cpp
+int32 TopNode;	HeapArr.HeapPop(TopNode);	// TopNode == 1	// HeapArr == [2,3,4,6,4,5,8,10,7,9]
+```
+
+## 堆 - TArray拥有支持二叉堆数据结构的函数。 堆是一种二叉树，其中父节点的排序等于或高于其子节点。 作为数组实现时，树的根节点位于元素0，索引N处节点的左右子节点的指数分别为2N+1和2N+2。 子节点彼此间不存在特定排序。 46
+
+**语言**: cpp
+
+```cpp
+HeapArr.HeapRemoveAt(1);	// HeapArr == [2,4,4,6,9,5,8,10,7]
+```
+
+## 堆 - TArray拥有支持二叉堆数据结构的函数。 堆是一种二叉树，其中父节点的排序等于或高于其子节点。 作为数组实现时，树的根节点位于元素0，索引N处节点的左右子节点的指数分别为2N+1和2N+2。 子节点彼此间不存在特定排序。 47
+
+**语言**: cpp
+
+```cpp
+int32 Top = HeapArr.HeapTop();	// Top == 2
+```
+
+## Slack - 由于数组可以调整大小，它们使用的内存量是可变的。 为了避免每次添加元素时都需要重新分配，分配器通常会提供比请求更多的内存，这样未来的Add调用就不必因为重新分配而承担性能代价。 同样，删除元素通常也不会释放内存。 这使得数组具有了Slack元素，这些元素实际上是当前未使用的预分配元素... 48
+
+```
+TArray<int32> SlackArray;
+	// SlackArray.GetSlack() == 0
+	// SlackArray.Num()      == 0
+	// SlackArray.Max()      == 0
+
+	SlackArray.Add(1);
+	// SlackArray.GetSlack() == 3
+	// SlackArray.Num()      == 1
+	// SlackArray.Max()      == 4
+```
+
+## Slack - 由于数组可以调整大小，它们使用的内存量是可变的。 为了避免每次添加元素时都需要重新分配，分配器通常会提供比请求更多的内存，这样未来的Add调用就不必因为重新分配而承担性能代价。 同样，删除元素通常也不会释放内存。 这使得数组具有了Slack元素，这些元素实际上是当前未使用的预分配元素... 49
+
+```
+SlackArray.Empty();
+	// SlackArray.GetSlack() == 0
+	// SlackArray.Num()      == 0
+	// SlackArray.Max()      == 0
+	SlackArray.Empty(3);
+	// SlackArray.GetSlack() == 3
+	// SlackArray.Num()      == 0
+	// SlackArray.Max()      == 3
+	SlackArray.Add(1);
+	SlackArray.Add(2);
+```
+
+## Slack - 由于数组可以调整大小，它们使用的内存量是可变的。 为了避免每次添加元素时都需要重新分配，分配器通常会提供比请求更多的内存，这样未来的Add调用就不必因为重新分配而承担性能代价。 同样，删除元素通常也不会释放内存。 这使得数组具有了Slack元素，这些元素实际上是当前未使用的预分配元素... 50
+
+**语言**: cpp
+
+```cpp
+SlackArray.Reset(0);	// SlackArray.GetSlack() == 3	// SlackArray.Num()      == 0	// SlackArray.Max()      == 3	SlackArray.Reset(10);	// SlackArray.GetSlack() == 10	// SlackArray.Num()      == 0	// SlackArray.Max()      == 10
+```
+
+## Slack - 由于数组可以调整大小，它们使用的内存量是可变的。 为了避免每次添加元素时都需要重新分配，分配器通常会提供比请求更多的内存，这样未来的Add调用就不必因为重新分配而承担性能代价。 同样，删除元素通常也不会释放内存。 这使得数组具有了Slack元素，这些元素实际上是当前未使用的预分配元素... 51
+
+```
+SlackArray.Add(5);
+	SlackArray.Add(10);
+	SlackArray.Add(15);
+	SlackArray.Add(20);
+	// SlackArray.GetSlack() == 6
+	// SlackArray.Num()      == 4
+	// SlackArray.Max()      == 10
+	SlackArray.Shrink();
+	// SlackArray.GetSlack() == 0
+	// SlackArray.Num()      == 4
+```
+
+## 原始内存 - 本质上而言，TArray只是分配内存周围的包装器。 直接修改分配的字节和自行创建元素即可将其用作包装器，此操作十分实用。 Tarray将尽量利用其拥有的信息进行执行，但有时需降低一个等级。 52
+
+**语言**: cpp
+
+```cpp
+int32 SrcInts[] = { 2, 3, 5, 7 };	TArray<int32> UninitInts;	UninitInts.AddUninitialized(4);	FMemory::Memcpy(UninitInts.GetData(), SrcInts, 4*sizeof(int32));	// UninitInts == [2,3,5,7]
+```
+
+## 原始内存 - 本质上而言，TArray只是分配内存周围的包装器。 直接修改分配的字节和自行创建元素即可将其用作包装器，此操作十分实用。 Tarray将尽量利用其拥有的信息进行执行，但有时需降低一个等级。 53
+
+**语言**: cpp
+
+```cpp
+TArray<FString> UninitStrs;	UninitStrs.Emplace(TEXT("A"));	UninitStrs.Emplace(TEXT("D"));	UninitStrs.InsertUninitialized(1, 2);	new ((void*)(UninitStrs.GetData() + 1)) FString(TEXT("B"));	new ((void*)(UninitStrs.GetData() + 2)) FString(TEXT("C"));	// UninitStrs == ["A","B","C","D"]
+```
+
+## 原始内存 - 本质上而言，TArray只是分配内存周围的包装器。 直接修改分配的字节和自行创建元素即可将其用作包装器，此操作十分实用。 Tarray将尽量利用其拥有的信息进行执行，但有时需降低一个等级。 54
+
+```
+struct S
+	{
+		S(int32 InInt, void* InPtr, float InFlt)
+			: Int(InInt)
+			, Ptr(InPtr)
+			, Flt(InFlt)
+		{
+		}
+		int32 Int;
+		void* Ptr;
+```
+
+## 原始内存 - 本质上而言，TArray只是分配内存周围的包装器。 直接修改分配的字节和自行创建元素即可将其用作包装器，此操作十分实用。 Tarray将尽量利用其拥有的信息进行执行，但有时需降低一个等级。 55
+
+```
+SArr.SetNumUninitialized(3);
+	new ((void*)(SArr.GetData() + 1)) S(5, (void*)0x12345678, 3.14);
+	new ((void*)(SArr.GetData() + 2)) S(2, (void*)0x87654321, 2.72);
+	// SArr == [
+	//   { Int: 0, Ptr: nullptr,    Flt: 0.0f  },
+	//   { Int: 5, Ptr: 0x12345678, Flt: 3.14f },
+	//   { Int: 2, Ptr: 0x87654321, Flt: 2.72f }
+	// ]
+
+	SArr.SetNumZeroed(5);
+```
+

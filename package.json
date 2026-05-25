@@ -1,0 +1,41 @@
+{
+  "name": "openclaw-commander-pro",
+  "version": "2.0.0",
+  "description": "OpenClaw Commander Pro - 双模型混合思考 AI 指挥中心",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx,ts,tsx",
+    "server": "node server/index.js",
+    "server:terminal": "node server/terminal.js",
+    "server:all": "concurrently \"npm run server\" \"npm run server:terminal\"",
+    "test": "node test/run-tests.js",
+    "test:workflow": "node test/workflow-integration.test.js",
+    "test:performance": "node test/performance.test.js"
+  },
+  "dependencies": {
+    "@nut-tree/nut-js": "^3.1.2",
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "lucide-react": "^0.344.0",
+    "puppeteer": "^24.40.0",
+    "puppeteer-core": "^24.40.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-window": "^1.8.10",
+    "socket.io-client": "^4.6.1",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.2",
+    "vite": "^5.2.0"
+  }
+}

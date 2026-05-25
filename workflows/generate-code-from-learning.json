@@ -1,0 +1,91 @@
+{
+  "name": "基于学习文档生成 UE5 C++ 代码",
+  "description": "读取学习文档，让 AI 根据 Epic Games 编码规范生成 C++ 代码",
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "name": "开始",
+      "position": { "x": 100, "y": 200 },
+      "config": {}
+    },
+    {
+      "id": "skill-read-1",
+      "type": "skill",
+      "name": "读取学习文档",
+      "position": { "x": 400, "y": 200 },
+      "config": {
+        "skill": "safe_read_file",
+        "path": "UE5-CPP-Learning.md"
+      }
+    },
+    {
+      "id": "skill-code-1",
+      "type": "skill",
+      "name": "生成 C++ 代码",
+      "position": { "x": 700, "y": 200 },
+      "config": {
+        "skill": "generate_project_code",
+        "projectType": "Unreal Engine 5 C++ 项目",
+        "techStack": "Unreal Engine 5.7, C++20",
+        "requirements": "创建一个 UE5 Actor 类，实现以下功能：\n1. 在 BeginPlay 时打印欢迎日志\n2. 每帧调用 Tick 函数\n3. 遵循 Epic Games C++ 编码规范\n4. 包含完整的版权声明",
+        "learningResults": "${safe_read_file.content}"
+      }
+    },
+    {
+      "id": "skill-write-1",
+      "type": "skill",
+      "name": "保存头文件",
+      "position": { "x": 1000, "y": 150 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "MyActor.h",
+        "content": "${generate_project_code.files[0].content}"
+      }
+    },
+    {
+      "id": "skill-write-2",
+      "type": "skill",
+      "name": "保存源文件",
+      "position": { "x": 1000, "y": 250 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "MyActor.cpp",
+        "content": "${generate_project_code.files[1].content}"
+      }
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "name": "结束",
+      "position": { "x": 1300, "y": 200 },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": "start-1",
+      "target": "skill-read-1"
+    },
+    {
+      "source": "skill-read-1",
+      "target": "skill-code-1"
+    },
+    {
+      "source": "skill-code-1",
+      "target": "skill-write-1"
+    },
+    {
+      "source": "skill-code-1",
+      "target": "skill-write-2"
+    },
+    {
+      "source": "skill-write-1",
+      "target": "end-1"
+    },
+    {
+      "source": "skill-write-2",
+      "target": "end-1"
+    }
+  ]
+}

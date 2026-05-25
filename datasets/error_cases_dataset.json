@@ -1,0 +1,47 @@
+[
+  {
+    "id": "error_001",
+    "category": "Python 常见错误",
+    "title": "可变默认参数陷阱",
+    "error": {
+      "code": "def append_item(item, list=[]):\n    list.append(item)\n    return list\n\n# 问题\nprint(append_item(1))  # [1]\nprint(append_item(2))  # [1, 2] 期望 [2]",
+      "problem": "默认参数在函数定义时只求值一次",
+      "consequence": "多次调用共享同一个列表对象"
+    },
+    "solution": {
+      "code": "def append_item(item, list=None):\n    if list is None:\n        list = []\n    list.append(item)\n    return list",
+      "explanation": "使用 None 作为默认值，在函数内部创建新列表"
+    },
+    "lesson": "永远不要用可变对象作为默认参数"
+  },
+  {
+    "id": "error_002",
+    "category": "JavaScript 常见错误",
+    "title": "异步代码中的闭包问题",
+    "error": {
+      "code": "for (var i = 0; i < 5; i++) {\n  setTimeout(() => {\n    console.log(i);  // 输出 5 次 5，期望 0,1,2,3,4\n  }, 1000);\n}",
+      "problem": "var 是函数作用域，所有循环共享同一个 i",
+      "consequence": "setTimeout 回调执行时 i 已经变成 5"
+    },
+    "solution": {
+      "code": "// 方法 1: 使用 let\nfor (let i = 0; i < 5; i++) {\n  setTimeout(() => {\n    console.log(i);  // 0,1,2,3,4\n  }, 1000);\n}\n\n// 方法 2: 使用 IIFE\nfor (var i = 0; i < 5; i++) {\n  (function(j) {\n    setTimeout(() => {\n      console.log(j);\n    }, 1000);\n  })(i);\n}",
+      "explanation": "let 创建块级作用域，或使用 IIFE 创建独立作用域"
+    },
+    "lesson": "在循环中使用异步函数时，优先使用 let 而非 var"
+  },
+  {
+    "id": "error_003",
+    "category": "数据库操作错误",
+    "title": "SQL 注入漏洞",
+    "error": {
+      "code": "# 危险！用户输入直接拼接到 SQL\nusername = input(\"Username: \")\nquery = f\"SELECT * FROM users WHERE username = '{username}'\"\ncursor.execute(query)",
+      "problem": "用户输入未经过滤直接拼接到 SQL 语句",
+      "consequence": "攻击者可输入 \"' OR '1'='1\" 绕过认证"
+    },
+    "solution": {
+      "code": "# 使用参数化查询\nusername = input(\"Username: \")\nquery = \"SELECT * FROM users WHERE username = ?\"\ncursor.execute(query, (username,))",
+      "explanation": "参数化查询会自动转义用户输入"
+    },
+    "lesson": "永远不要拼接 SQL，始终使用参数化查询"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "py_adv_001",
+    "language": "python",
+    "category": "装饰器",
+    "title": "函数装饰器",
+    "difficulty": "advanced",
+    "code": "\"\"\"Python 装饰器示例\"\"\"\n\nfrom functools import wraps\nimport time\n\ndef timer(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start = time.time()\n        result = func(*args, **kwargs)\n        end = time.time()\n        print(f\"{func.__name__} 耗时：{end - start:.4f}秒\")\n        return result\n    return wrapper\n\n@timer\ndef slow_function():\n    time.sleep(1)\n    return \"完成\"\n\nslow_function()",
+    "tags": ["装饰器", "元编程", "高阶函数"],
+    "quality": 97,
+    "explanation": "展示了 Python 装饰器的创建和使用"
+  },
+  {
+    "id": "py_adv_002",
+    "language": "python",
+    "category": "生成器",
+    "title": "生成器和迭代器",
+    "difficulty": "advanced",
+    "code": "\"\"\"Python 生成器示例\"\"\"\n\ndef countdown(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nfor i in countdown(5):\n    print(i)\n\ndef fibonacci():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\n\nfib = fibonacci()\nfor _ in range(10):\n    print(next(fib))",
+    "tags": ["生成器", "yield", "迭代器"],
+    "quality": 96,
+    "explanation": "展示了生成器的各种用法"
+  },
+  {
+    "id": "py_adv_003",
+    "language": "python",
+    "category": "上下文管理器",
+    "title": "自定义上下文管理器",
+    "difficulty": "advanced",
+    "code": "\"\"\"Python 上下文管理器示例\"\"\"\n\nfrom contextlib import contextmanager\n\nclass DatabaseConnection:\n    def __init__(self, conn_str):\n        self.conn_str = conn_str\n    \n    def __enter__(self):\n        print(f\"连接到数据库：{self.conn_str}\")\n        return {\"connected\": True}\n    \n    def __exit__(self, *args):\n        print(\"断开数据库连接\")\n        return False\n\nwith DatabaseConnection(\"mysql://localhost\") as conn:\n    print(f\"数据库连接：{conn}\")",
+    "tags": ["上下文管理器", "with", "资源管理"],
+    "quality": 95,
+    "explanation": "展示了两种实现上下文管理器的方法"
+  },
+  {
+    "id": "web_001",
+    "language": "javascript",
+    "category": "React",
+    "title": "React Hooks 基础",
+    "difficulty": "intermediate",
+    "code": "import React, { useState, useEffect } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  useEffect(() => {\n    document.title = `计数：${count}`;\n  }, [count]);\n  \n  return (\n    <div>\n      <p>计数：{count}</p>\n      <button onClick={() => setCount(count + 1)}>\n        增加\n      </button>\n    </div>\n  );\n}\n\nexport default Counter;",
+    "tags": ["React", "Hooks", "useState", "useEffect"],
+    "quality": 98,
+    "explanation": "展示了 React Hooks 的基础用法"
+  },
+  {
+    "id": "web_002",
+    "language": "javascript",
+    "category": "Node.js",
+    "title": "Express REST API",
+    "difficulty": "intermediate",
+    "code": "const express = require('express');\nconst app = express();\n\napp.use(express.json());\n\nlet items = [{ id: 1, name: 'Item 1' }];\n\napp.get('/api/items', (req, res) => {\n  res.json({ success: true, data: items });\n});\n\napp.post('/api/items', (req, res) => {\n  const newItem = { id: items.length + 1, ...req.body };\n  items.push(newItem);\n  res.status(201).json({ success: true, data: newItem });\n});\n\napp.listen(3000, () => {\n  console.log('服务器运行在 http://localhost:3000');\n});",
+    "tags": ["Express", "REST API", "Node.js"],
+    "quality": 97,
+    "explanation": "展示了完整的 REST API 实现"
+  }
+]

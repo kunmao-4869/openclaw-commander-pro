@@ -1,0 +1,275 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-04-03T07:56:48.794Z",
+  "project": {
+    "name": "你画我猜",
+    "type": "HarmonyOS",
+    "description": "双人实时在线游戏",
+    "language": "ArkTS",
+    "framework": "ArkUI",
+    "tags": [
+      "HarmonyOS",
+      "ArkTS",
+      "实时游戏",
+      "WebSocket",
+      "Canvas"
+    ]
+  },
+  "techStack": [
+    {
+      "name": "HarmonyOS分布式操作系统",
+      "category": "通信",
+      "purpose": "实现多设备无缝协同与万物互联",
+      "keyFeatures": [
+        "分布式任务调度",
+        "设备虚拟化",
+        "跨设备文件传输"
+      ],
+      "learningResources": [
+        "https://device.harmonyos.com"
+      ]
+    },
+    {
+      "name": "DevEco Studio",
+      "category": "工具",
+      "purpose": "提供一站式开发环境",
+      "keyFeatures": [
+        "模拟器支持",
+        "多设备调试",
+        "代码自动补全"
+      ],
+      "learningResources": [
+        "https://device.harmonyos.com/cn/develop/ide"
+      ]
+    },
+    {
+      "name": "分布式数据加密",
+      "category": "安全",
+      "purpose": "保障跨设备数据传输安全",
+      "keyFeatures": [
+        "端到端加密",
+        "权限分级管理",
+        "数据完整性校验"
+      ],
+      "learningResources": [
+        "https://device.harmonyos.com/cn/develop/security"
+      ]
+    },
+    {
+      "name": "HarmonyOS SDK",
+      "category": "框架",
+      "purpose": "支持应用与设备开发",
+      "keyFeatures": [
+        "跨设备能力调用",
+        "UI组件库",
+        "系统服务接口"
+      ],
+      "learningResources": [
+        "https://device.harmonyos.com/cn/develop/ark"
+      ]
+    },
+    {
+      "name": "分布式任务调度",
+      "category": "通信",
+      "purpose": "实现跨设备任务无缝接力",
+      "keyFeatures": [
+        "任务分发机制",
+        "资源动态分配",
+        "状态同步"
+      ],
+      "learningResources": [
+        "https://device.harmonyos.com/cn/develop/distributed"
+      ]
+    }
+  ],
+  "architecture": {
+    "designPattern": "分布式架构 + 微内核设计",
+    "modules": [
+      {
+        "name": "分布式任务调度模块",
+        "purpose": "管理跨设备任务分发与执行",
+        "files": [
+          "DistributedTask.ets",
+          "TaskScheduler.ets"
+        ]
+      },
+      {
+        "name": "设备虚拟化模块",
+        "purpose": "实现设备资源统一抽象与管理",
+        "files": [
+          "DeviceVirtualization.ets",
+          "ResourceAllocator.ets"
+        ]
+      },
+      {
+        "name": "数据加密模块",
+        "purpose": "提供端到端数据加密与传输安全",
+        "files": [
+          "DataEncryption.ets",
+          "SecureChannel.ets"
+        ]
+      },
+      {
+        "name": "权限管理模块",
+        "purpose": "实现细粒度权限控制与访问审计",
+        "files": [
+          "PermissionManager.ets",
+          "AccessLog.ets"
+        ]
+      },
+      {
+        "name": "跨设备协同模块",
+        "purpose": "支持多设备间无缝交互与状态同步",
+        "files": [
+          "CrossDeviceSync.ets",
+          "ContextSharing.ets"
+        ]
+      }
+    ],
+    "files": []
+  },
+  "implementationSteps": [
+    {
+      "step": 1,
+      "title": "环境搭建",
+      "description": "安装DevEco Studio并配置HarmonyOS SDK",
+      "keyPoints": [
+        "选择合适开发板",
+        "配置模拟器环境",
+        "安装依赖工具链"
+      ],
+      "estimatedTime": "30分钟"
+    },
+    {
+      "step": 2,
+      "title": "项目初始化",
+      "description": "创建分布式应用工程并配置多设备支持",
+      "keyPoints": [
+        "定义设备能力清单",
+        "配置分布式能力声明",
+        "设置设备连接参数"
+      ],
+      "estimatedTime": "45分钟"
+    },
+    {
+      "step": 3,
+      "title": "分布式能力开发",
+      "description": "实现跨设备任务调度与数据同步逻辑",
+      "keyPoints": [
+        "使用@ohos.distributedTask模块",
+        "实现数据一致性校验",
+        "配置任务优先级"
+      ],
+      "estimatedTime": "2小时"
+    },
+    {
+      "step": 4,
+      "title": "安全机制实现",
+      "description": "集成数据加密与权限管理功能",
+      "keyPoints": [
+        "调用加密API接口",
+        "配置权限声明文件",
+        "实现访问控制逻辑"
+      ],
+      "estimatedTime": "1.5小时"
+    },
+    {
+      "step": 5,
+      "title": "测试与部署",
+      "description": "进行多设备联调与性能优化",
+      "keyPoints": [
+        "使用模拟器进行跨设备测试",
+        "优化资源占用率",
+        "生成发布包"
+      ],
+      "estimatedTime": "2小时"
+    }
+  ],
+  "bestPractices": [
+    {
+      "category": "代码规范",
+      "practice": "遵循HarmonyOS官方代码风格指南",
+      "reason": "确保代码可维护性与跨设备兼容性"
+    },
+    {
+      "category": "性能优化",
+      "practice": "采用异步任务调度与资源懒加载",
+      "reason": "提升多设备协同响应速度与系统稳定性"
+    },
+    {
+      "category": "错误处理",
+      "practice": "实现分布式任务重试与断点续传机制",
+      "reason": "保障跨设备操作的可靠性与数据完整性"
+    }
+  ],
+  "potentialChallenges": [
+    {
+      "challenge": "跨设备兼容性问题",
+      "solution": "使用设备能力检测API进行动态适配"
+    },
+    {
+      "challenge": "生态成熟度不足",
+      "solution": "参与开发者联盟计划获取资源支持"
+    },
+    {
+      "challenge": "安全实现复杂性",
+      "solution": "采用模块化安全架构分层实现"
+    },
+    {
+      "challenge": "性能优化瓶颈",
+      "solution": "使用性能分析工具进行资源占用监控"
+    },
+    {
+      "challenge": "开发者适配成本",
+      "solution": "通过官方培训体系掌握分布式开发模式"
+    }
+  ],
+  "references": {
+    "searchCount": 10,
+    "topLinks": [
+      {
+        "title": "全部",
+        "url": "https://cn.bing.com/search?q=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1&rdr=1&rdrig=3FBBA344E01A46B8B7AE0FCBFEC70ABB&FORM=000017&qpvt=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1"
+      },
+      {
+        "title": "24 小时内",
+        "url": "https://cn.bing.com/search?q=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1&filters=ex1%3a%22ez1%22&rdr=1&rdrig=3FBBA344E01A46B8B7AE0FCBFEC70ABB&FORM=000017"
+      },
+      {
+        "title": "一周内",
+        "url": "https://cn.bing.com/search?q=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1&filters=ex1%3a%22ez2%22&rdr=1&rdrig=3FBBA344E01A46B8B7AE0FCBFEC70ABB&FORM=000017"
+      },
+      {
+        "title": "一个月内",
+        "url": "https://cn.bing.com/search?q=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1&filters=ex1%3a%22ez3%22&rdr=1&rdrig=3FBBA344E01A46B8B7AE0FCBFEC70ABB&FORM=000017"
+      },
+      {
+        "title": "去年",
+        "url": "https://cn.bing.com/search?q=%e9%b8%bf%e8%92%99+%e4%bd%a0%e7%94%bb%e6%88%91%e7%8c%9c+%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91+ArkTS+WebSocket+Canvas+%e5%ae%9e%e6%97%b6%e9%80%9a%e4%bf%a1&filters=ex1%3a%22ez5_20181_20546%22&rdr=1&rdrig=3FBBA344E01A46B8B7AE0FCBFEC70ABB&FORM=000017"
+      },
+      {
+        "title": "harmonyos.com\nhttps://www.harmonyos.com",
+        "url": "https://www.harmonyos.com/"
+      },
+      {
+        "title": "华为HarmonyOS智能终端操作系统官网 | 应用设备分布式 ...",
+        "url": "https://www.harmonyos.com/"
+      },
+      {
+        "title": "harmonyos.com\nhttps://device.harmonyos.com",
+        "url": "https://device.harmonyos.com/"
+      },
+      {
+        "title": "HarmonyOS设备开发官网 - 华为HarmonyOS打造全场景智能设备",
+        "url": "https://device.harmonyos.com/"
+      },
+      {
+        "title": "harmonyos.com\nhttps://www.harmonyos.com › en",
+        "url": "https://www.harmonyos.com/en/"
+      }
+    ],
+    "analysisSummary": "### 1. 核心要点总结  \n**关键点：**  \n- **分布式操作系统**：华为鸿蒙（HarmonyOS）是面向万物互联的全场景分布式操作系统，支持手机、平板、智能穿戴、智慧屏等多设备协同。  \n- **开发一站式服务**：提供应用开发和设备开发的完整工具链，包括开发环境、SDK、模拟器等，简化跨设备开发流程。  \n- **跨设备协同能力**：通过分布式技术实现设备间无缝互联（如文件传输、任务接力），提升用户体验。  \n- **安全性与可靠性**：强调系统级安全架构（如分布式数据加密、权限管理），保障用户隐私和数据安全。  \n- **生态建设**：通过开发者激励计划（如HarmonyOS开发者联盟）推动应用生态扩展，吸引开发者参与。  \n\n---\n\n### 2. 不同来源的观点对比  \n**分析：**  \n所有搜索结果均来自华为官网（harmonyos.com）及其子站（device.harmonyos.com），内容高度重复，未体现多来源观点差异。  \n- **唯一性**：所有结果均聚焦于鸿蒙系统的官方定位、技术特性及开发支持，未涉及第三方开发者评价、技术细节分析或竞争对比（如与Android/iOS的差异）。  \n- **信息一致性**：重复强调“分布式架构”“跨设备协同”“开发工具链”等核心卖点，表明华为官方对鸿蒙系统的宣传重点一致。  \n\n---\n\n### 3. 信息的可信度评估  \n**可信度分析：**  \n- **高可信度**：所有信息均来自华为官方渠道（harmonyos.com），内容与华为公开的技术路线图和产品策略一致，符合企业宣传逻辑。  \n- **局限性**：  \n  - **缺乏第三方验证**：未引用独立技术评测、开发者反馈或行业分析，可能无法全面反映实际开发体验。  \n  - **时效性风险**：部分信息可能未更新（如搜索结果中未提及鸿蒙4.0或HarmonyOS Next的最新特性）。  \n  - **宣传导向**：内容偏向技术宣传，可能弱化实际开发中的挑战（如兼容性问题、生态成熟度）。  \n\n---\n\n### 4. 可能遗漏的角度  \n**未被覆盖的维度：**  \n- **游戏开发的具体案例**：未提及鸿蒙系统在游戏开发中的实际应用（如性能优化、跨设备适配）。  \n- **技术实现细节**：未深入分析分布式架构的底层技术（如分布式任务调度、设备虚拟化）。  \n- **开发者生态现状**：未提供开发者数量、应用商店规模、第三方工具支持（如IDE、调试工具）。  \n- **竞争对比**：未涉及与其他操作系统的差异（如与Android的兼容性、与iOS的生态壁垒）。  \n- **行业应用案例**：未提及鸿蒙在工业、汽车等领域的落地场景（如鸿蒙智行、智慧能源）。  \n\n---\n\n### 5. 进一步研究的建议  \n**研究方向：**  \n1. **官方文档与开发者资源**：  \n   - 查阅HarmonyOS开发者文档（[https://device.harmonyos.com](https://device.harmonyos.com)）获取技术细节和API说明。  \n   - 探索开发者工具链（如DevEco Studio）的使用场景。  \n2. **第三方评测与案例**：  \n   - 搜索独立开发者或企业基于鸿蒙的“你画我猜”类游戏开发案例（如GitHub、开发者论坛）。  \n   - 分析鸿蒙在游戏性能优化（如图形渲染、多设备协同）中的技术实现。  \n3. **生态与竞争分析**：  \n   - 对比鸿蒙与Android/iOS在游戏开发中的差异（如跨平台支持、性能瓶颈）。  \n   - 调研鸿蒙生态的成熟度（如应用数量、用户活跃度）。  \n4. **技术白皮书与专利**：  \n   - 查阅华为发布的鸿蒙技术白皮书，了解分布式架构的核心创新点。  \n   - 分析鸿蒙相关专利（如分布式任务调度、设备虚拟化）的技术深度。  \n5. **行业应用扩展**：  \n   - 探索鸿蒙在智能汽车、工业物联网等领域的技术适配性（如鸿蒙智行、智慧屏生态）。  \n\n--- \n\n**总结**：当前搜索结果提供了鸿蒙系统的官方技术定位和开发支持信息，但缺乏深度技术解析和第三方视角。建议结合官方资源与外部案例，进一步挖掘鸿蒙在游戏开发中的技术实现细节与生态潜力。",
+    "comparisonSummary": "### 对比分析结果\n\n---\n\n#### **1. 各来源的共识点**\n| **共识点** | **说明** |\n|------------|----------|\n| **HarmonyOS定义** | 所有来源均强调HarmonyOS是“面向万物互联的全场景分布式操作系统”，支持手机、平板、智能穿戴、智慧屏等设备。 |\n| **开发平台** | 均提到提供“应用开发、设备开发的一站式服务平台”，涵盖开发工具和资源。 |\n| **核心特性** | 均强调“统一语言”实现设备互联与协同，提供“简捷、流畅、连续、安全可靠的全场景交互体验”。 |\n| **官网链接** | 所有来源均指向华为官网（harmonyos.com）及其子域名（如device.harmonyos.com）。 |\n\n---\n\n#### **2. 各来源的分歧点**\n| **分歧点** | **说明** |\n|------------|----------|\n| **内容一致性** | 所有来源内容**完全一致**，无差异。可能为重复抓取或输入错误，导致无实际分歧点。 |\n| **语言版本** | 部分来源（如`https://www.harmonyos.com › en`）提供英文内容，但未展开详细信息，可能因抓取不完整导致信息缺失。 |\n\n---\n\n#### **3. 可能的偏见或立场**\n| **潜在偏见/立场** | **说明** |\n|-------------------|----------|\n| **官方宣传导向** | 所有来源均为华为官网，可能侧重突出HarmonyOS的**技术优势**（如分布式能力、跨设备协同），但未提及竞争系统（如Android/iOS）的对比。 |\n| **信息完整性** | 部分链接（如英文版）内容截断（如`interconnection an`），可能因抓取不完整导致信息不全。 |\n| **缺乏第三方验证** | 所有信息均为华为官方内容，未引用外部评测或用户反馈，可能缺乏客观性。 |\n\n---\n\n#### **4. 哪个来源更可信（及原因）**\n| **可信度排序** | **来源** | **原因** |\n|----------------|----------|----------|\n| **来源1-10** | 所有来源 | 均为华为官网内容"
+  },
+  "codeGenerationPrompt": "# 你画我猜 - 代码生成任务单\n\n## 项目概述\n- **项目名称**: 你画我猜\n- **项目类型**: HarmonyOS 应用\n- **开发语言**: ArkTS\n- **UI 框架**: ArkUI\n- **项目描述**: 双人实时在线游戏\n- **标签**: \n\n## 技术栈\n- **HarmonyOS分布式操作系统** (通信): 实现多设备无缝协同与万物互联\n  - 特性：分布式任务调度, 设备虚拟化, 跨设备文件传输\n- **DevEco Studio** (工具): 提供一站式开发环境\n  - 特性：模拟器支持, 多设备调试, 代码自动补全\n- **分布式数据加密** (安全): 保障跨设备数据传输安全\n  - 特性：端到端加密, 权限分级管理, 数据完整性校验\n- **HarmonyOS SDK** (框架): 支持应用与设备开发\n  - 特性：跨设备能力调用, UI组件库, 系统服务接口\n- **分布式任务调度** (通信): 实现跨设备任务无缝接力\n  - 特性：任务分发机制, 资源动态分配, 状态同步\n\n## 架构设计\n**设计模式**: 分布式架构 + 微内核设计\n\n### 分布式任务调度模块\n- **职责**: 管理跨设备任务分发与执行\n- **文件**: DistributedTask.ets, TaskScheduler.ets\n\n### 设备虚拟化模块\n- **职责**: 实现设备资源统一抽象与管理\n- **文件**: DeviceVirtualization.ets, ResourceAllocator.ets\n\n### 数据加密模块\n- **职责**: 提供端到端数据加密与传输安全\n- **文件**: DataEncryption.ets, SecureChannel.ets\n\n### 权限管理模块\n- **职责**: 实现细粒度权限控制与访问审计\n- **文件**: PermissionManager.ets, AccessLog.ets\n\n### 跨设备协同模块\n- **职责**: 支持多设备间无缝交互与状态同步\n- **文件**: CrossDeviceSync.ets, ContextSharing.ets\n\n## 文件清单\n\n\n## 实现步骤\n**步骤1**: 环境搭建\n- 安装DevEco Studio并配置HarmonyOS SDK\n- 关键点：选择合适开发板, 配置模拟器环境, 安装依赖工具链\n- 预计：30分钟\n\n**步骤2**: 项目初始化\n- 创建分布式应用工程并配置多设备支持\n- 关键点：定义设备能力清单, 配置分布式能力声明, 设置设备连接参数\n- 预计：45分钟\n\n**步骤3**: 分布式能力开发\n- 实现跨设备任务调度与数据同步逻辑\n- 关键点：使用@ohos.distributedTask模块, 实现数据一致性校验, 配置任务优先级\n- 预计：2小时\n\n**步骤4**: 安全机制实现\n- 集成数据加密与权限管理功能\n- 关键点：调用加密API接口, 配置权限声明文件, 实现访问控制逻辑\n- 预计：1.5小时\n\n**步骤5**: 测试与部署\n- 进行多设备联调与性能优化\n- 关键点：使用模拟器进行跨设备测试, 优化资源占用率, 生成发布包\n- 预计：2小时\n\n## 最佳实践\n- [代码规范] 遵循HarmonyOS官方代码风格指南\n  - 原因：确保代码可维护性与跨设备兼容性\n- [性能优化] 采用异步任务调度与资源懒加载\n  - 原因：提升多设备协同响应速度与系统稳定性\n- [错误处理] 实现分布式任务重试与断点续传机制\n  - 原因：保障跨设备操作的可靠性与数据完整性\n\n## 潜在挑战\n- **跨设备兼容性问题**\n  - 解决方案：使用设备能力检测API进行动态适配\n- **生态成熟度不足**\n  - 解决方案：参与开发者联盟计划获取资源支持\n- **安全实现复杂性**\n  - 解决方案：采用模块化安全架构分层实现\n- **性能优化瓶颈**\n  - 解决方案：使用性能分析工具进行资源占用监控\n- **开发者适配成本**\n  - 解决方案：通过官方培训体系掌握分布式开发模式\n\n## 代码生成要求\n\n### 1. 代码质量要求\n- ✅ 所有代码必须是**完整的、可运行的**\n- ✅ 使用 **ArkTS** 语言和 **ArkUI** 框架\n- ✅ 遵循**鸿蒙官方代码规范**\n- ✅ 包含**必要的注释**说明关键逻辑\n- ✅ 每个文件要有**清晰的头部注释**（文件名、功能、作者、日期）\n\n### 2. 功能要求\n- ✅ 双人实时在线（一人画画，一人猜）\n- ✅ WebSocket 实时通信\n- ✅ Canvas 画布绘制（支持触摸）\n- ✅ 词库管理（随机选词）\n- ✅ 计时器和计分系统\n- ✅ 游戏状态管理（等待中、进行中、结束）\n\n### 3. 输出格式\n请生成**完整的 JSON 格式**项目配置，格式如下：\n\n```json\n{\n  \"project\": {\n    \"name\": \"你画我猜\",\n    \"version\": \"1.0.0\",\n    \"description\": \"双人实时在线游戏\"\n  },\n  \"files\": [\n    {\n      \"path\": \"entry/src/main/ets/pages/Index.ets\",\n      \"content\": \"// 完整的代码内容\"\n    },\n    // ... 所有文件\n  ]\n}\n```\n\n### 4. 注意事项\n1. 确保所有导入语句正确\n2. 确保组件装饰器使用正确（@Entry, @Component, @State 等）\n3. 确保 WebSocket 连接逻辑完整（连接、发送、接收、断开）\n4. 确保触摸事件处理正确（开始、移动、结束）\n5. 确保游戏状态流转正确（等待→游戏→结算）\n\n现在，请根据以上要求生成完整的、可运行的你画我猜项目代码。"
+}

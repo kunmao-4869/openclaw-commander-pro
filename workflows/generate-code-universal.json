@@ -1,0 +1,72 @@
+{
+  "name": "通用代码生成（基于学习文档）",
+  "description": "读取任意开发工具/框架的学习文档，生成符合该规范的代码",
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "name": "开始",
+      "position": { "x": 100, "y": 200 },
+      "config": {}
+    },
+    {
+      "id": "skill-read-1",
+      "type": "skill",
+      "name": "读取学习文档",
+      "position": { "x": 400, "y": 200 },
+      "config": {
+        "skill": "safe_read_file",
+        "path": "${learningDocPath}"
+      }
+    },
+    {
+      "id": "skill-code-1",
+      "type": "skill",
+      "name": "生成代码",
+      "position": { "x": 700, "y": 200 },
+      "config": {
+        "skill": "generate_project_code",
+        "projectType": "${projectType}",
+        "techStack": "${techStack}",
+        "requirements": "${requirements}",
+        "learningResults": "${safe_read_file.content}"
+      }
+    },
+    {
+      "id": "skill-write-1",
+      "type": "skill",
+      "name": "保存代码文件",
+      "position": { "x": 1000, "y": 200 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "${outputFilePath}",
+        "content": "${generate_project_code.files[0].content}"
+      }
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "name": "结束",
+      "position": { "x": 1300, "y": 200 },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": "start-1",
+      "target": "skill-read-1"
+    },
+    {
+      "source": "skill-read-1",
+      "target": "skill-code-1"
+    },
+    {
+      "source": "skill-code-1",
+      "target": "skill-write-1"
+    },
+    {
+      "source": "skill-write-1",
+      "target": "end-1"
+    }
+  ]
+}

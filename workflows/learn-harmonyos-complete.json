@@ -1,0 +1,186 @@
+{
+  "name": "学习 HarmonyOS 开发规范（完整版）",
+  "description": "学习 HarmonyOS 官方文档的索引页面和关键章节，生成完整的学习文档",
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "name": "开始",
+      "position": { "x": 100, "y": 300 },
+      "config": {}
+    },
+    {
+      "id": "skill-learn-index",
+      "type": "skill",
+      "name": "学习索引页面",
+      "position": { "x": 400, "y": 300 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/"
+      }
+    },
+    {
+      "id": "skill-save-index",
+      "type": "skill",
+      "name": "保存索引文档",
+      "position": { "x": 700, "y": 150 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-index.md",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "skill-learn-arkts",
+      "type": "skill",
+      "name": "学习 ArkTS 语法",
+      "position": { "x": 700, "y": 300 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/arkts-get-started-0000001504920217"
+      }
+    },
+    {
+      "id": "skill-learn-ui",
+      "type": "skill",
+      "name": "学习 UI 开发",
+      "position": { "x": 700, "y": 450 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/arkui-get-started-0000001504920173"
+      }
+    },
+    {
+      "id": "skill-save-arkts",
+      "type": "skill",
+      "name": "保存 ArkTS 文档",
+      "position": { "x": 1000, "y": 250 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-arkts.md",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "skill-save-ui",
+      "type": "skill",
+      "name": "保存 UI 开发文档",
+      "position": { "x": 1000, "y": 400 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-ui.md",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "skill-learn-component",
+      "type": "skill",
+      "name": "学习组件开发",
+      "position": { "x": 700, "y": 600 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/component-guidelines-0000001504920253"
+      }
+    },
+    {
+      "id": "skill-learn-data",
+      "type": "skill",
+      "name": "学习数据管理",
+      "position": { "x": 700, "y": 750 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/data-management-0000001504920291"
+      }
+    },
+    {
+      "id": "skill-save-component",
+      "type": "skill",
+      "name": "保存组件开发文档",
+      "position": { "x": 1000, "y": 550 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-component.md",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "skill-save-data",
+      "type": "skill",
+      "name": "保存数据管理文档",
+      "position": { "x": 1000, "y": 700 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-data.md",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "skill-merge-all",
+      "type": "skill",
+      "name": "合并所有学习文档",
+      "position": { "x": 1300, "y": 300 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "harmonyos-complete-guide.md",
+        "content": "# HarmonyOS 开发规范完整指南\n\n## 目录\n\n1. [索引和概述](#索引和概述)\n2. [ArkTS 语法](#arkts-语法)\n3. [UI 开发](#ui-开发)\n4. [组件开发](#组件开发)\n5. [数据管理](#数据管理)\n\n---\n\n## 索引和概述\n\n${safe_read_file.content}\n\n---\n\n## ArkTS 语法\n\n${safe_read_file_2.content}\n\n---\n\n## UI 开发\n\n${safe_read_file_3.content}\n\n---\n\n## 组件开发\n\n${safe_read_file_4.content}\n\n---\n\n## 数据管理\n\n${safe_read_file_5.content}\n\n---\n\n**学习时间**: ${new Date().toLocaleString('zh-CN')}\n**文档来源**: Huawei HarmonyOS Developer"
+      }
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "name": "结束",
+      "position": { "x": 1600, "y": 300 },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": "start-1",
+      "target": "skill-learn-index"
+    },
+    {
+      "source": "skill-learn-index",
+      "target": "skill-save-index"
+    },
+    {
+      "source": "skill-learn-index",
+      "target": "skill-learn-arkts"
+    },
+    {
+      "source": "skill-learn-arkts",
+      "target": "skill-learn-ui"
+    },
+    {
+      "source": "skill-learn-ui",
+      "target": "skill-learn-component"
+    },
+    {
+      "source": "skill-learn-component",
+      "target": "skill-learn-data"
+    },
+    {
+      "source": "skill-save-index",
+      "target": "skill-save-arkts"
+    },
+    {
+      "source": "skill-save-arkts",
+      "target": "skill-save-ui"
+    },
+    {
+      "source": "skill-save-ui",
+      "target": "skill-save-component"
+    },
+    {
+      "source": "skill-save-component",
+      "target": "skill-save-data"
+    },
+    {
+      "source": "skill-save-data",
+      "target": "skill-merge-all"
+    },
+    {
+      "source": "skill-merge-all",
+      "target": "end-1"
+    }
+  ]
+}

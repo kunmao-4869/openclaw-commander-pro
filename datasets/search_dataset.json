@@ -1,0 +1,87 @@
+[
+  {
+    "id": "search_001",
+    "query": "Python 读取 CSV 文件",
+    "intent": "learn_how_to",
+    "results": [
+      {
+        "title": "Python CSV 模块官方文档",
+        "url": "https://docs.python.org/3/library/csv.html",
+        "type": "official_doc",
+        "relevance": 100,
+        "content": "Python 内置 csv 模块，用于读写 CSV 文件。使用 csv.reader() 读取，csv.writer() 写入。"
+      },
+      {
+        "title": "Pandas 读取 CSV 教程",
+        "url": "https://pandas.pydata.org/docs/user_guide/io.html",
+        "type": "tutorial",
+        "relevance": 95,
+        "content": "使用 pandas.read_csv() 可以更便捷地读取 CSV，直接返回 DataFrame，支持多种参数。"
+      },
+      {
+        "title": "Python 读取 CSV 的三种方法",
+        "url": "https://example.com/python-read-csv",
+        "type": "blog",
+        "relevance": 90,
+        "content": "1. csv 模块 2. pandas 3. numpy.loadtxt()，根据场景选择合适方法。"
+      }
+    ],
+    "bestAnswer": {
+      "method": "pandas.read_csv()",
+      "code": "import pandas as pd\ndf = pd.read_csv('file.csv')\nprint(df.head())",
+      "explanation": "对于数据分析场景，推荐使用 pandas，功能强大且易用"
+    }
+  },
+  {
+    "id": "search_002",
+    "query": "JavaScript 数组去重",
+    "intent": "solve_problem",
+    "results": [
+      {
+        "title": "MDN - Set",
+        "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set",
+        "type": "official_doc",
+        "relevance": 100,
+        "content": "Set 是 ES6 新增的数据结构，成员唯一，可用于数组去重。"
+      },
+      {
+        "title": "JavaScript 数组去重的 5 种方法",
+        "url": "https://example.com/js-array-unique",
+        "type": "tutorial",
+        "relevance": 95,
+        "content": "1. Set 2. filter 3. reduce 4. forEach 5. 双重循环"
+      }
+    ],
+    "bestAnswer": {
+      "method": "Set + 展开运算符",
+      "code": "const unique = [...new Set(array)];",
+      "explanation": "最简洁的方法，性能好，代码可读性强"
+    }
+  },
+  {
+    "id": "search_003",
+    "query": "Python 异常处理最佳实践",
+    "intent": "learn_best_practice",
+    "results": [
+      {
+        "title": "Python 异常处理官方指南",
+        "url": "https://docs.python.org/3/tutorial/errors.html",
+        "type": "official_doc",
+        "relevance": 100,
+        "content": "使用 try-except-finally，捕获特定异常，避免裸 except。"
+      },
+      {
+        "title": "Python 异常处理 7 个最佳实践",
+        "url": "https://example.com/python-exception-best-practices",
+        "type": "tutorial",
+        "relevance": 95,
+        "content": "1. 捕获特定异常 2. 使用 finally 清理资源 3. 自定义异常 4. 记录异常日志..."
+      }
+    ],
+    "bestAnswer": {
+      "method": "try-except-else-finally",
+      "code": "try:\n    result = risky_operation()\nexcept SpecificError as e:\n    logger.error(f\"操作失败：{e}\")\n    raise\nelse:\n    return result\nfinally:\n    cleanup_resources()",
+      "explanation": "完整的异常处理结构，包含错误处理、成功分支和资源清理"
+    }
+  }
+]

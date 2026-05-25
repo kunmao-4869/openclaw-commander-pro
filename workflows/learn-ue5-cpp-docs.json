@@ -1,0 +1,55 @@
+{
+  "name": "学习虚幻 5 官方文档（修正版）",
+  "description": "使用 learn_webpage 技能学习 Epic Games 官方文档并保存",
+  "nodes": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "name": "开始",
+      "position": { "x": 100, "y": 200 },
+      "config": {}
+    },
+    {
+      "id": "skill-learn-1",
+      "type": "skill",
+      "name": "学习 C++ 编程文档",
+      "position": { "x": 400, "y": 200 },
+      "config": {
+        "skill": "learn_webpage",
+        "url": "https://dev.epicgames.com/documentation/unreal-engine/programming-with-cplusplus-in-unreal-engine"
+      }
+    },
+    {
+      "id": "skill-write-1",
+      "type": "skill",
+      "name": "保存学习文档",
+      "position": { "x": 700, "y": 200 },
+      "config": {
+        "skill": "safe_write_file",
+        "path": "UE5teaching.txt",
+        "content": "${learn_webpage.learningDoc}"
+      }
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "name": "结束",
+      "position": { "x": 1000, "y": 200 },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": "start-1",
+      "target": "skill-learn-1"
+    },
+    {
+      "source": "skill-learn-1",
+      "target": "skill-write-1"
+    },
+    {
+      "source": "skill-write-1",
+      "target": "end-1"
+    }
+  ]
+}

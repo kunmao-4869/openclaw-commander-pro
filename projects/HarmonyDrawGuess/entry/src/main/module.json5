@@ -1,0 +1,18 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "你画我猜游戏",
+    "mainElement": "EntryAbility",
+    "deviceTypes": ["phone", "tablet"],
+    "abilities": [{
+      "name": "EntryAbility",
+      "srcEntry": "./ets/entryability/EntryAbility.ets",
+      "exported": true,
+      "skills": [{
+        "actions": ["action.system.home"],
+        "entities": ["entity.system.home"]
+      }]
+    }]
+  }
+}

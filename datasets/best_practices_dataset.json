@@ -1,0 +1,89 @@
+[
+  {
+    "id": "bp_001",
+    "category": "Python 编码规范",
+    "title": "PEP 8 编码规范要点",
+    "practices": [
+      {
+        "rule": "缩进使用 4 个空格",
+        "good": "def function():\\n    pass",
+        "bad": "def function():\\n  pass  # 2 个空格",
+        "explanation": "PEP 8 明确规定使用 4 个空格缩进"
+      },
+      {
+        "rule": "函数名使用小写 + 下划线",
+        "good": "def calculate_total():",
+        "bad": "def calculateTotal():  # 驼峰命名",
+        "explanation": "Python 函数命名约定使用 snake_case"
+      },
+      {
+        "rule": "类名使用大驼峰",
+        "good": "class UserProfile:",
+        "bad": "class user_profile:  # 小写",
+        "explanation": "类名使用 PascalCase"
+      },
+      {
+        "rule": "一行不超过 79 个字符",
+        "good": "long_string = (\\n    \"line 1\"\\n    \"line 2\"\\n)",
+        "bad": "long_string = \"line 1 line 2 line 3 ...\"  # 太长",
+        "explanation": "保持代码可读性"
+      }
+    ]
+  },
+  {
+    "id": "bp_002",
+    "category": "JavaScript 最佳实践",
+    "title": "现代 JavaScript 编程规范",
+    "practices": [
+      {
+        "rule": "优先使用 const，需要重新赋值时用 let",
+        "good": "const PI = 3.14;\\nlet count = 0;",
+        "bad": "var PI = 3.14;  // 使用 var",
+        "explanation": "const 和 let 是块级作用域"
+      },
+      {
+        "rule": "使用箭头函数",
+        "good": "const add = (a, b) => a + b;",
+        "bad": "function add(a, b) { return a + b; }",
+        "explanation": "箭头函数更简洁，this 绑定更清晰"
+      },
+      {
+        "rule": "使用模板字符串",
+        "good": "const msg = `Hello, ${name}!`;",
+        "bad": "const msg = 'Hello, ' + name + '!';",
+        "explanation": "模板字符串更易读"
+      }
+    ]
+  },
+  {
+    "id": "bp_003",
+    "category": "代码审查清单",
+    "title": "代码审查检查项",
+    "practices": [
+      {
+        "rule": "代码是否有清晰的注释",
+        "checklist": [
+          "函数有文档字符串",
+          "复杂逻辑有注释说明",
+          "魔法数字有命名常量"
+        ]
+      },
+      {
+        "rule": "错误处理是否完善",
+        "checklist": [
+          "捕获特定异常",
+          "记录错误日志",
+          "有适当的错误提示"
+        ]
+      },
+      {
+        "rule": "代码是否可测试",
+        "checklist": [
+          "函数职责单一",
+          "依赖可注入",
+          "无副作用"
+        ]
+      }
+    ]
+  }
+]

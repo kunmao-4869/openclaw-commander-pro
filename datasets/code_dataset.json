@@ -1,0 +1,66 @@
+[
+  {
+    "id": "code_001",
+    "language": "python",
+    "category": "web_scraping",
+    "title": "Python 网络爬虫示例",
+    "difficulty": "intermediate",
+    "code": "\n\"\"\"\n网络爬虫示例\n功能：获取网页内容，解析 HTML，提取数据\n\"\"\"\n\nimport requests\nfrom bs4 import BeautifulSoup\nimport json\n\n\nclass WebScraper:\n    \"\"\"网页爬虫类\"\"\"\n    \n    def __init__(self, base_url, delay=1):\n        self.base_url = base_url\n        self.delay = delay\n        self.session = requests.Session()\n        self.session.headers.update({\n            'User-Agent': 'Mozilla/5.0'\n        })\n    \n    def fetch(self, url):\n        \"\"\"获取网页\"\"\"\n        try:\n            response = self.session.get(url, timeout=10)\n            response.raise_for_status()\n            return response.text\n        except requests.RequestException as e:\n            print(f\"请求失败：{e}\")\n            return None\n    \n    def parse(self, html):\n        \"\"\"解析 HTML\"\"\"\n        soup = BeautifulSoup(html, 'html.parser')\n        return soup\n    \n    def extract_links(self, soup):\n        \"\"\"提取链接\"\"\"\n        links = []\n        for a in soup.find_all('a', href=True):\n            links.append({\n                'text': a.get_text(strip=True),\n                'href': a['href']\n            })\n        return links\n    \n    def extract_text(self, soup, selector='p'):\n        \"\"\"提取文本\"\"\"\n        texts = []\n        for elem in soup.select(selector):\n            texts.append(elem.get_text(strip=True))\n        return texts\n    \n    def save_to_json(self, data, filename):\n        \"\"\"保存数据\"\"\"\n        with open(filename, 'w', encoding='utf-8') as f:\n            json.dump(data, f, ensure_ascii=False, indent=2)\n        print(f\"数据已保存到 {filename}\")\n\n\ndef main():\n    \"\"\"主函数\"\"\"\n    scraper = WebScraper('https://example.com')\n    \n    # 获取网页\n    html = scraper.fetch('https://example.com')\n    if not html:\n        return\n    \n    # 解析\n    soup = scraper.parse(html)\n    \n    # 提取数据\n    links = scraper.extract_links(soup)\n    texts = scraper.extract_text(soup)\n    \n    # 保存\n    scraper.save_to_json({\n        'links': links,\n        'texts': texts\n    }, 'scraped_data.json')\n    \n    print(f\"提取了 {len(links)} 个链接，{len(texts)} 段文本\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "tags": [
+      "requests",
+      "beautifulsoup",
+      "爬虫",
+      "数据提取"
+    ],
+    "quality": 95,
+    "explanation": "\n这个示例展示了：\n1. 使用 requests 库发送 HTTP 请求\n2. 使用 BeautifulSoup 解析 HTML\n3. 提取链接和文本数据\n4. 保存为 JSON 格式\n\n最佳实践：\n- 使用 Session 管理连接\n- 设置 User-Agent 避免被屏蔽\n- 添加错误处理\n- 使用延时避免请求过快\n"
+  },
+  {
+    "id": "code_002",
+    "language": "python",
+    "category": "data_processing",
+    "title": "Pandas 数据处理示例",
+    "difficulty": "intermediate",
+    "code": "\n\"\"\"\nPandas 数据处理示例\n功能：读取 CSV、数据清洗、统计分析、导出结果\n\"\"\"\n\nimport pandas as pd\nimport numpy as np\nfrom datetime import datetime\n\n\nclass DataProcessor:\n    \"\"\"数据处理器\"\"\"\n    \n    def __init__(self, filepath):\n        self.filepath = filepath\n        self.df = None\n    \n    def load(self):\n        \"\"\"加载数据\"\"\"\n        print(f\"加载数据：{self.filepath}\")\n        self.df = pd.read_csv(self.filepath)\n        print(f\"加载完成：{len(self.df)} 行，{len(self.df.columns)} 列\")\n        return self\n    \n    def clean(self):\n        \"\"\"清洗数据\"\"\"\n        print(\"\\n数据清洗...\")\n        \n        # 删除空值\n        before = len(self.df)\n        self.df.dropna(inplace=True)\n        after = len(self.df)\n        print(f\"删除空值：{before - after} 行\")\n        \n        # 删除重复\n        before = len(self.df)\n        self.df.drop_duplicates(inplace=True)\n        after = len(self.df)\n        print(f\"删除重复：{before - after} 行\")\n        \n        return self\n    \n    def analyze(self):\n        \"\"\"统计分析\"\"\"\n        print(\"\\n统计分析：\")\n        \n        # 基本统计\n        print(\"\\n数值列统计：\")\n        print(self.df.describe())\n        \n        # 相关性\n        print(\"\\n相关性矩阵：\")\n        numeric_cols = self.df.select_dtypes(include=[np.number]).columns\n        if len(numeric_cols) > 0:\n            print(self.df[numeric_cols].corr())\n        \n        return self\n    \n    def filter(self, column, condition):\n        \"\"\"过滤数据\"\"\"\n        print(f\"\\n过滤数据：{column} {condition}\")\n        self.df = self.df.query(f\"{column} {condition}\")\n        return self\n    \n    def export(self, filename):\n        \"\"\"导出数据\"\"\"\n        print(f\"\\n导出数据到：{filename}\")\n        self.df.to_csv(filename, index=False, encoding='utf-8-sig')\n        print(\"导出完成\")\n        return self\n    \n    def info(self):\n        \"\"\"显示信息\"\"\"\n        print(\"\\n数据集信息：\")\n        print(self.df.info())\n        return self\n\n\ndef main():\n    \"\"\"主函数\"\"\"\n    # 创建示例数据\n    data = {\n        'name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve'],\n        'age': [25, 30, 35, 40, 45],\n        'salary': [50000, 60000, 75000, 80000, 90000],\n        'department': ['HR', 'IT', 'IT', 'HR', 'IT']\n    }\n    \n    # 保存为 CSV\n    df_temp = pd.DataFrame(data)\n    df_temp.to_csv('employees.csv', index=False)\n    \n    # 处理数据\n    processor = DataProcessor('employees.csv')\n    \n    result = (processor\n        .load()\n        .info()\n        .analyze()\n        .export('processed_data.csv')\n    )\n    \n    print(\"\\n数据处理完成！\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "tags": [
+      "pandas",
+      "数据处理",
+      "统计分析",
+      "CSV"
+    ],
+    "quality": 98,
+    "explanation": "\n这个示例展示了：\n1. 使用 Pandas 读取和写入 CSV\n2. 数据清洗（删除空值、重复值）\n3. 描述性统计分析\n4. 链式调用设计模式\n\n最佳实践：\n- 方法链式调用，代码简洁\n- 每个方法返回 self，支持链式\n- 详细的日志输出\n- 错误处理和数据验证\n"
+  },
+  {
+    "id": "code_003",
+    "language": "javascript",
+    "category": "api_development",
+    "title": "Node.js REST API 示例",
+    "difficulty": "advanced",
+    "code": "\n/**\n * Node.js REST API 示例\n * 功能：创建 RESTful API，CRUD 操作，中间件，错误处理\n */\n\nconst express = require('express');\nconst { v4: uuidv4 } = require('uuid');\n\nclass RESTAPI {\n  constructor(port = 3000) {\n    this.port = port;\n    this.app = express();\n    this.items = new Map();\n    \n    // 中间件\n    this.app.use(express.json());\n    this.app.use(this.loggingMiddleware);\n    this.app.use(this.errorHandler);\n    \n    // 路由\n    this.setupRoutes();\n  }\n  \n  // 日志中间件\n  loggingMiddleware(req, res, next) {\n    const timestamp = new Date().toISOString();\n    console.log(`[${timestamp}] ${req.method} ${req.path}`);\n    next();\n  }\n  \n  // 错误处理中间件\n  errorHandler(err, req, res, next) {\n    console.error('错误:', err.message);\n    res.status(500).json({\n      success: false,\n      error: err.message\n    });\n  }\n  \n  // 设置路由\n  setupRoutes() {\n    // 获取所有\n    this.app.get('/api/items', (req, res) => {\n      const items = Array.from(this.items.values());\n      res.json({ success: true, data: items });\n    });\n    \n    // 获取单个\n    this.app.get('/api/items/:id', (req, res) => {\n      const item = this.items.get(req.params.id);\n      if (!item) {\n        return res.status(404).json({ \n          success: false, \n          error: '未找到' \n        });\n      }\n      res.json({ success: true, data: item });\n    });\n    \n    // 创建\n    this.app.post('/api/items', (req, res) => {\n      const id = uuidv4();\n      const item = {\n        id,\n        ...req.body,\n        createdAt: new Date().toISOString()\n      };\n      this.items.set(id, item);\n      res.status(201).json({ success: true, data: item });\n    });\n    \n    // 更新\n    this.app.put('/api/items/:id', (req, res) => {\n      const item = this.items.get(req.params.id);\n      if (!item) {\n        return res.status(404).json({ \n          success: false, \n          error: '未找到' \n        });\n      }\n      const updated = { ...item, ...req.body };\n      this.items.set(req.params.id, updated);\n      res.json({ success: true, data: updated });\n    });\n    \n    // 删除\n    this.app.delete('/api/items/:id', (req, res) => {\n      const deleted = this.items.delete(req.params.id);\n      res.json({ \n        success: deleted, \n        message: deleted ? '删除成功' : '未找到' \n      });\n    });\n  }\n  \n  // 启动服务器\n  start() {\n    this.app.listen(this.port, () => {\n      console.log(`服务器运行在 http://localhost:${this.port}`);\n      console.log('API 端点:');\n      console.log('  GET    /api/items     - 获取所有');\n      console.log('  GET    /api/items/:id - 获取单个');\n      console.log('  POST   /api/items     - 创建');\n      console.log('  PUT    /api/items/:id - 更新');\n      console.log('  DELETE /api/items/:id - 删除');\n    });\n  }\n}\n\n// 启动\nconst api = new RESTAPI(3000);\napi.start();\n",
+    "tags": [
+      "express",
+      "REST API",
+      "Node.js",
+      "CRUD"
+    ],
+    "quality": 96,
+    "explanation": "\n这个示例展示了：\n1. Express 框架创建 REST API\n2. 完整的 CRUD 操作\n3. 中间件（日志、错误处理）\n4. UUID 生成唯一 ID\n\n最佳实践：\n- RESTful 设计风格\n- 统一的响应格式\n- 中间件处理横切关注点\n- 适当的 HTTP 状态码\n"
+  },
+  {
+    "id": "code_004",
+    "language": "python",
+    "category": "automation",
+    "title": "文件自动化整理脚本",
+    "difficulty": "beginner",
+    "code": "\n\"\"\"\n文件自动化整理脚本\n功能：扫描目录，按类型分类，移动到对应文件夹\n\"\"\"\n\nimport os\nimport shutil\nfrom pathlib import Path\nfrom datetime import datetime\n\n\nclass FileOrganizer:\n    \"\"\"文件整理器\"\"\"\n    \n    def __init__(self, directory):\n        self.directory = Path(directory)\n        self.stats = {\n            'moved': 0,\n            'skipped': 0,\n            'errors': 0\n        }\n        \n        # 文件类型映射\n        self.categories = {\n            'Images': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'],\n            'Documents': ['.pdf', '.doc', '.docx', '.txt', '.xlsx', '.pptx'],\n            'Videos': ['.mp4', '.avi', '.mkv', '.mov', '.wmv'],\n            'Music': ['.mp3', '.wav', '.flac', '.aac'],\n            'Archives': ['.zip', '.rar', '.7z', '.tar', '.gz'],\n            'Code': ['.py', '.js', '.java', '.cpp', '.c', '.html', '.css']\n        }\n    \n    def organize(self):\n        \"\"\"整理文件\"\"\"\n        print(f\"开始整理目录：{self.directory.absolute()}\")\n        print(f\"时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n\")\n        \n        # 扫描文件\n        files = [f for f in self.directory.iterdir() if f.is_file()]\n        print(f\"找到 {len(files)} 个文件\\n\")\n        \n        # 整理每个文件\n        for file_path in files:\n            self._process_file(file_path)\n        \n        # 显示统计\n        self._show_stats()\n    \n    def _process_file(self, file_path):\n        \"\"\"处理单个文件\"\"\"\n        try:\n            ext = file_path.suffix.lower()\n            category = self._find_category(ext)\n            \n            if category:\n                target_dir = self.directory / category\n                target_dir.mkdir(exist_ok=True)\n                \n                target_path = target_dir / file_path.name\n                \n                # 避免覆盖\n                if target_path.exists():\n                    target_path = self._rename_duplicate(target_path)\n                \n                shutil.move(str(file_path), str(target_path))\n                self.stats['moved'] += 1\n                print(f\"✓ {file_path.name} -> {category}/\")\n            else:\n                self.stats['skipped'] += 1\n                print(f\"⊘ {file_path.name} (未知类型)\")\n        \n        except Exception as e:\n            self.stats['errors'] += 1\n            print(f\"✗ {file_path.name}: {e}\")\n    \n    def _find_category(self, ext):\n        \"\"\"查找文件类型对应的分类\"\"\"\n        for category, extensions in self.categories.items():\n            if ext in extensions:\n                return category\n        return None\n    \n    def _rename_duplicate(self, path):\n        \"\"\"重命名重复文件\"\"\"\n        stem = path.stem\n        suffix = path.suffix\n        counter = 1\n        \n        while path.exists():\n            new_name = f\"{stem}_duplicate_{counter}{suffix}\"\n            path = path.parent / new_name\n            counter += 1\n        \n        return path\n    \n    def _show_stats(self):\n        \"\"\"显示统计信息\"\"\"\n        print(\"\\n\" + \"=\" * 50)\n        print(\"整理完成\")\n        print(\"=\" * 50)\n        print(f\"移动文件：{self.stats['moved']}\")\n        print(f\"跳过文件：{self.stats['skipped']}\")\n        print(f\"错误：{self.stats['errors']}\")\n        print(f\"总计：{self.stats['moved'] + self.stats['skipped'] + self.stats['errors']}\")\n\n\ndef main():\n    \"\"\"主函数\"\"\"\n    directory = input(\"要整理的目录（默认当前目录）：\") or '.'\n    \n    if not os.path.isdir(directory):\n        print(f\"错误：'{directory}' 不是有效目录\")\n        return\n    \n    organizer = FileOrganizer(directory)\n    organizer.organize()\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "tags": [
+      "文件操作",
+      "自动化",
+      "脚本",
+      "批量处理"
+    ],
+    "quality": 94,
+    "explanation": "\n这个示例展示了：\n1. 使用 pathlib 处理文件路径\n2. 按扩展名分类文件\n3. 自动创建目录结构\n4. 处理文件名冲突\n\n最佳实践：\n- 使用 Path 对象而非字符串\n- 详细的进度输出\n- 完善的错误处理\n- 统计信息展示\n"
+  }
+]

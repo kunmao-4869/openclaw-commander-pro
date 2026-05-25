@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>诊断页面</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .error { color: #ff6b6b; }
+    .success { color: #51cf66; }
+    .warning { color: #fcc419; }
+    .info { color: #339af0; }
+  </style>
+</head>
+<body>
+  <h1>🔍 诊断页面</h1>
+  <div id="logs"></div>
+  
+  <script>
+    const logs = document.getElementById('logs');
+    
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = type;
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logs.appendChild(div);
+      console.log(message);
+    }
+    
+    log('开始诊断...', 'info');
+    
+    // 检查 root 元素
+    const root = document.createElement('div');
+    root.id = 'test-root';
+    document.body.appendChild(root);
+    log('✓ 创建测试容器', 'success');
+    
+    // 检查 React
+    try {
+      log('正在加载 React...', 'info');
+      import('http://localhost:3002/src/test.jsx')
+        .then(() => log('✓ React 模块加载成功', 'success'))
+        .catch(err => log('✗ React 模块加载失败：' + err.message, 'error'));
+    } catch (err) {
+      log('✗ React 检查失败：' + err.message, 'error');
+    }
+    
+    // 检查 CSS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'http://localhost:3002/src/index.css';
+    link.onload = () => log('✓ CSS 加载成功', 'success');
+    link.onerror = () => log('✗ CSS 加载失败', 'error');
+    document.head.appendChild(link);
+    
+    // 检查主应用
+    setTimeout(() => {
+      fetch('http://localhost:3002/src/App.jsx')
+        .then(res => res.text())
+        .then(code => {
+          log(`✓ App.jsx 可访问 (${code.length} bytes)`, 'success');
+          if (code.includes('className="h-screen')) {
+            log('✓ App.jsx 包含主容器样式', 'success');
+          }
+        })
+        .catch(err => log('✗ App.jsx 访问失败：' + err.message, 'error'));
+    }, 1000);
+    
+    // 检查 Vite 状态
+    fetch('http://localhost:3002/')
+      .then(res => res.text())
+      .then(html => {
+        log(`✓ Vite 服务器响应正常 (${html.length} bytes)`, 'success');
+        if (html.includes('main.jsx')) {
+          log('✓ index.html 引用 main.jsx', 'success');
+        }
+      })
+      .catch(err => log('✗ Vite 服务器访问失败：' + err.message, 'error'));
+    
+    log('诊断完成', 'info');
+  </script>
+</body>
+</html>

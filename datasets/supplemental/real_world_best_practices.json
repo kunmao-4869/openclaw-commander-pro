@@ -1,0 +1,112 @@
+[
+  {
+    "id": "bp_real_001",
+    "category": "代码审查",
+    "source": "Google Code Review Guide",
+    "title": "代码审查清单",
+    "practices": [
+      {
+        "rule": "代码是否可读",
+        "checklist": [
+          "变量和函数命名清晰",
+          "函数职责单一",
+          "代码有适当注释",
+          "避免魔法数字"
+        ],
+        "explanation": "代码首先是写给人看的"
+      },
+      {
+        "rule": "是否有适当的测试",
+        "checklist": [
+          "单元测试覆盖核心逻辑",
+          "边界条件有测试",
+          "错误处理有测试",
+          "测试用例清晰"
+        ],
+        "explanation": "没有测试的代码不可信"
+      }
+    ]
+  },
+  {
+    "id": "bp_real_002",
+    "category": "Git 工作流",
+    "source": "GitHub Flow",
+    "title": "Git 分支管理",
+    "practices": [
+      {
+        "rule": "分支命名规范",
+        "good": "feature/user-auth, bugfix/login-error, hotfix/security",
+        "bad": "test, new-feature, fix",
+        "explanation": "分支名应该清晰描述目的"
+      },
+      {
+        "rule": "提交信息规范",
+        "good": "feat: add user login\\n\\n- Implement login API\\n- Add tests",
+        "bad": "update, fix stuff, wip",
+        "explanation": "提交信息应该说明做了什么和为什么"
+      }
+    ]
+  },
+  {
+    "id": "bp_real_003",
+    "category": "API 设计",
+    "source": "REST API Guidelines",
+    "title": "RESTful API 设计",
+    "practices": [
+      {
+        "rule": "使用正确的 HTTP 方法",
+        "examples": {
+          "GET": "获取资源",
+          "POST": "创建资源",
+          "PUT": "更新资源",
+          "DELETE": "删除资源"
+        },
+        "explanation": "遵循 REST 规范"
+      },
+      {
+        "rule": "统一的响应格式",
+        "good": "{\\n  \"success\": true,\\n  \"data\": {...},\\n  \"error\": null\\n}",
+        "explanation": "保持响应格式一致"
+      }
+    ]
+  },
+  {
+    "id": "bp_real_004",
+    "category": "数据库",
+    "source": "Database Best Practices",
+    "title": "数据库优化",
+    "practices": [
+      {
+        "rule": "使用索引优化查询",
+        "good": "CREATE INDEX idx_user_email ON users(email);",
+        "explanation": "为常用查询字段添加索引"
+      },
+      {
+        "rule": "避免 N+1 查询",
+        "good": "SELECT * FROM users JOIN orders ON users.id = orders.user_id;",
+        "bad": "for user in users: get_orders(user.id)",
+        "explanation": "使用 JOIN 减少查询次数"
+      }
+    ]
+  },
+  {
+    "id": "bp_real_005",
+    "category": "安全性",
+    "source": "OWASP Guidelines",
+    "title": "Web 安全实践",
+    "practices": [
+      {
+        "rule": "密码存储",
+        "good": "使用 bcrypt 或 argon2 哈希",
+        "bad": "明文存储或使用 MD5",
+        "explanation": "密码必须加密存储"
+      },
+      {
+        "rule": "输入验证",
+        "good": "验证所有用户输入，使用白名单",
+        "bad": "直接使用用户输入",
+        "explanation": "永远不要信任用户输入"
+      }
+    ]
+  }
+]

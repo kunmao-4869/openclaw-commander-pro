@@ -1,0 +1,253 @@
+# 代码示例：arkts-layout-development-linear-V5
+
+> 来源：https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/arkts-layout-development-linear-V5
+> 提取时间：2026/4/14 10:59:58
+
+---
+
+## 布局子元素在排列方向上的间距 - 在布局容器内，可以通过space属性设置排列方向上子元素的间距，使各子元素在排列方向上有等间距效果。 1
+
+**语言**: typescript
+
+```typescript
+Column({ space: 20 }) {  Text('space: 20').fontSize(15).fontColor(Color.Gray).width('90%')  Row().width('90%').height(50).backgroundColor(0xF5DEB3)  Row().width('90%').height(50).backgroundColor(0xD2B48C)  Row().width('90%').height(50).backgroundColor(0xF5DEB3)}.width('100%')
+```
+
+## 布局子元素在排列方向上的间距 - 在布局容器内，可以通过space属性设置排列方向上子元素的间距，使各子元素在排列方向上有等间距效果。 2
+
+**语言**: typescript
+
+```typescript
+Row({ space: 35 }) {  Text('space: 35').fontSize(15).fontColor(Color.Gray)  Row().width('10%').height(150).backgroundColor(0xF5DEB3)  Row().width('10%').height(150).backgroundColor(0xD2B48C)  Row().width('10%').height(150).backgroundColor(0xF5DEB3)}.width('90%')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 3
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').alignItems(HorizontalAlign.Start).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 4
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').alignItems(HorizontalAlign.Center).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 5
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').alignItems(HorizontalAlign.End).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 6
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).alignItems(VerticalAlign.Top).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 7
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).alignItems(VerticalAlign.Center).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在交叉轴上的对齐方式 - 在布局容器内，可以通过alignItems属性设置子元素在交叉轴（排列方向的垂直方向）上的对齐方式。且在各类尺寸屏幕中，表现一致。其中，交叉轴为垂直方向时，取值为VerticalAlign类型，水平方向取值为HorizontalAlign类型。 8
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).alignItems(VerticalAlign.Bottom).backgroundColor('rgb(242,242,242)')
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 9
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.Start)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 10
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.Center)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 11
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.End)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 12
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceBetween)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 13
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceAround)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 14
+
+**语言**: typescript
+
+```typescript
+Column({}) {  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)
+  Column() {  }.width('80%').height(50).backgroundColor(0xD2B48C)
+  Column() {  }.width('80%').height(50).backgroundColor(0xF5DEB3)}.width('100%').height(300).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceEvenly)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 15
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.Start)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 16
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.Center)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 17
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.End)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 18
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceBetween)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 19
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceAround)
+```
+
+## 布局子元素在主轴上的排列方式 - 在布局容器内，可以通过justifyContent属性设置子元素在容器主轴上的排列方式。可以从主轴起始位置开始排布，也可以从主轴结束位置开始排布，或者均匀分割主轴的空间。 20
+
+**语言**: typescript
+
+```typescript
+Row({}) {  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)
+  Column() {  }.width('20%').height(30).backgroundColor(0xD2B48C)
+  Column() {  }.width('20%').height(30).backgroundColor(0xF5DEB3)}.width('100%').height(200).backgroundColor('rgb(242,242,242)').justifyContent(FlexAlign.SpaceEvenly)
+```
+
+## 自适应拉伸 - 在线性布局下，常用空白填充组件Blank，在容器主轴方向自动填充空白空间，达到自适应拉伸效果。Row和Column作为容器，只需要添加宽高为百分比，当屏幕宽高发生变化时，会产生自适应效果。 21
+
+**语言**: typescript
+
+```typescript
+@Entry@Componentstruct BlankExample {  build() {    Column() {      Row() {        Text('Bluetooth').fontSize(18)        Blank()        Toggle({ type: ToggleType.Switch, isOn: true })      }.backgroundColor(0xFFFFFF).borderRadius(15).padding({ left: 12 }).width('100%')    }.backgroundColor(0xEFEFEF).padding(20).width('100%')  }}
+```
+
+## 自适应缩放 - 自适应缩放是指子元素随容器尺寸的变化而按照预设的比例自动调整尺寸，适应各种不同大小的设备。在线性布局中，可以使用以下两种方法实现自适应缩放。 22
+
+**语言**: typescript
+
+```typescript
+@Entry@Componentstruct layoutWeightExample {  build() {    Column() {      Text('1:2:3').width('100%')      Row() {        Column() {          Text('layoutWeight(1)')            .textAlign(TextAlign.Center)        }.layoutWeight(1).backgroundColor(0xF5DEB3).height('100%')
+        Column() {          Text('layoutWeight(2)')            .textAlign(TextAlign.Center)        }.layoutWeight(2).backgroundColor(0xD2B48C).height('100%')
+        Column() {          Text('layoutWeight(3)')            .textAlign(TextAlign.Center)        }.layoutWeight(3).backgroundColor(0xF5DEB3).height('100%')
+      }.backgroundColor(0xffd306).height('30%')
+      Text('2:5:3').width('100%')      Row() {        Column() {          Text('layoutWeight(2)')            .textAlign(TextAlign.Center)        }.layoutWeight(2).backgroundColor(0xF5DEB3).height('100%')
+        Column() {          Text('layoutWeight(5)')            .textAlign(TextAlign.Center)        }.layoutWeight(5).backgroundColor(0xD2B48C).height('100%')
+        Column() {          Text('layoutWeight(3)')            .textAlign(TextAlign.Center)        }.layoutWeight(3).backgroundColor(0xF5DEB3).height('100%')      }.backgroundColor(0xffd306).height('30%')    }  }}
+```
+
+## 自适应缩放 - 自适应缩放是指子元素随容器尺寸的变化而按照预设的比例自动调整尺寸，适应各种不同大小的设备。在线性布局中，可以使用以下两种方法实现自适应缩放。 23
+
+**语言**: typescript
+
+```typescript
+@Entry@Componentstruct WidthExample {  build() {    Column() {      Row() {        Column() {          Text('left width 20%')            .textAlign(TextAlign.Center)        }.width('20%').backgroundColor(0xF5DEB3).height('100%')
+        Column() {          Text('center width 50%')            .textAlign(TextAlign.Center)        }.width('50%').backgroundColor(0xD2B48C).height('100%')
+        Column() {          Text('right width 30%')            .textAlign(TextAlign.Center)        }.width('30%').backgroundColor(0xF5DEB3).height('100%')      }.backgroundColor(0xffd306).height('30%')    }  }}
+```
+
+## 自适应延伸 - 自适应延伸是指在不同尺寸设备下，当页面的内容超出屏幕大小而无法完全显示时，可以通过滚动条进行拖动展示。这种方法适用于线性布局中内容无法一屏展示的场景。通常有以下两种实现方式。 24
+
+**语言**: typescript
+
+```typescript
+@Entry@Componentstruct ScrollExample {  scroller: Scroller = new Scroller();  private arr: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  build() {    Scroll(this.scroller) {      Column() {        ForEach(this.arr, (item?:number|undefined) => {          if(item){            Text(item.toString())            .width('90%')            .height(150)            .backgroundColor(0xFFFFFF)            .borderRadius(15)            .fontSize(16)            .textAlign(TextAlign.Center)            .margin({ top: 10 })          }        }, (item:number) => item.toString())      }.width('100%')    }    .backgroundColor(0xDCDCDC)    .scrollable(ScrollDirection.Vertical) // 滚动方向为垂直方向    .scrollBar(BarState.On) // 滚动条常驻显示    .scrollBarColor(Color.Gray) // 滚动条颜色    .scrollBarWidth(10) // 滚动条宽度    .edgeEffect(EdgeEffect.Spring) // 滚动到边沿后回弹  }}
+```
+
+## 自适应延伸 - 自适应延伸是指在不同尺寸设备下，当页面的内容超出屏幕大小而无法完全显示时，可以通过滚动条进行拖动展示。这种方法适用于线性布局中内容无法一屏展示的场景。通常有以下两种实现方式。 25
+
+**语言**: typescript
+
+```typescript
+@Entry@Componentstruct ScrollExample {  scroller: Scroller = new Scroller();  private arr: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  build() {    Scroll(this.scroller) {      Row() {        ForEach(this.arr, (item?:number|undefined) => {          if(item){            Text(item.toString())            .height('90%')            .width(150)            .backgroundColor(0xFFFFFF)            .borderRadius(15)            .fontSize(16)            .textAlign(TextAlign.Center)            .margin({ left: 10 })          }        })      }.height('100%')    }    .backgroundColor(0xDCDCDC)    .scrollable(ScrollDirection.Horizontal) // 滚动方向为水平方向    .scrollBar(BarState.On) // 滚动条常驻显示    .scrollBarColor(Color.Gray) // 滚动条颜色    .scrollBarWidth(10) // 滚动条宽度    .edgeEffect(EdgeEffect.Spring) // 滚动到边沿后回弹  }}
+```
+

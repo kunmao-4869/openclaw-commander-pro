@@ -1,0 +1,58 @@
+[
+  {
+    "id": "doc_001",
+    "source": "Python 官方文档",
+    "topic": "列表推导式",
+    "url": "https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions",
+    "content": "\n# 列表推导式\n\n列表推导式提供了一种简洁的方式来创建列表。\n\n## 基本语法\n\n[expression for item in iterable]\n\n## 示例\n\n# 创建平方列表\nsquares = [x**2 for x in range(10)]\n# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# 添加条件\neven_squares = [x**2 for x in range(10) if x % 2 == 0]\n# [0, 4, 16, 36, 64]\n\n# 嵌套循环\npairs = [(x, y) for x in [1,2,3] for y in [3,1,4] if x != y]\n",
+    "keyPoints": [
+      "列表推导式比 for 循环更简洁",
+      "可以包含条件过滤",
+      "支持嵌套循环",
+      "适用于简单转换，复杂逻辑仍用 for 循环"
+    ],
+    "examples": [
+      {
+        "code": "[x*2 for x in range(5)]",
+        "output": "[0, 2, 4, 6, 8]"
+      },
+      {
+        "code": "[x for x in range(10) if x > 5]",
+        "output": "[6, 7, 8, 9]"
+      }
+    ]
+  },
+  {
+    "id": "doc_002",
+    "source": "MDN Web Docs",
+    "topic": "JavaScript Promise",
+    "url": "https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "content": "\n# Promise\n\nPromise 对象代表一个异步操作的最终完成或失败。\n\n## 状态\n\n- pending: 初始状态\n- fulfilled: 成功完成\n- rejected: 失败\n\n## 基本用法\n\nconst promise = new Promise((resolve, reject) => {\n  // 异步操作\n  if (success) {\n    resolve(value);\n  } else {\n    reject(error);\n  }\n});\n\npromise\n  .then(result => console.log(result))\n  .catch(error => console.error(error));\n",
+    "keyPoints": [
+      "Promise 有三种状态",
+      "状态一旦改变不可逆",
+      "then() 处理成功，catch() 处理失败",
+      "支持链式调用"
+    ],
+    "examples": [
+      {
+        "code": "Promise.resolve(42).then(x => console.log(x))",
+        "output": "42"
+      }
+    ]
+  },
+  {
+    "id": "doc_003",
+    "source": "Express.js 官方文档",
+    "topic": "中间件",
+    "url": "https://expressjs.com/en/guide/using-middleware.html",
+    "content": "\n# Express 中间件\n\n中间件函数可以执行以下操作：\n\n1. 执行任何代码\n2. 修改请求和响应对象\n3. 结束请求 - 响应循环\n4. 调用下一个中间件\n\n## 使用示例\n\n// 应用级中间件\napp.use((req, res, next) => {\n  console.log('Time:', Date.now());\n  next();\n});\n\n// 路由级中间件\napp.use('/api', apiRouter);\n\n// 错误处理中间件\napp.use((err, req, res, next) => {\n  console.error(err.stack);\n  res.status(500).send('Something broke!');\n});\n",
+    "keyPoints": [
+      "中间件是 Express 的核心",
+      "必须调用 next() 传递控制",
+      "错误处理中间件有 4 个参数",
+      "中间件按定义顺序执行"
+    ],
+    "examples": []
+  }
+]

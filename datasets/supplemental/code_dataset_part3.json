@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "name": "补充代码数据集 Part 3",
+    "version": "1.0.0",
+    "created": "2026-01-17",
+    "description": "真实项目代码示例 - 第三部分（40 个示例）",
+    "language": "multi",
+    "categories": ["database", "testing", "security", "performance", "utility"]
+  },
+  "samples": [
+    {
+      "id": "code_061",
+      "category": "database",
+      "language": "python",
+      "title": "数据库连接池",
+      "description": "异步数据库连接管理",
+      "code": "import asyncio\nimport asyncpg\nfrom typing import Optional\nfrom contextlib import asynccontextmanager\n\nclass DatabasePool:\n    def __init__(self, dsn: str, min_size: int = 5, max_size: int = 20):\n        self.dsn = dsn\n        self.min_size = min_size\n        self.max_size = max_size\n        self.pool: Optional[asyncpg.Pool] = None\n    \n    async def connect(self):\n        self.pool = await asyncpg.create_pool(\n            self.dsn,\n            min_size=self.min_size,\n            max_size=self.max_size,\n            command_timeout=60\n        )\n        print(f\"Database connected: {self.min_size}-{self.max_size} connections\")\n    \n    async def disconnect(self):\n        if self.pool:\n            await self.pool.close()\n            print(\"Database disconnected\")\n    \n    @asynccontextmanager\n    async def acquire(self):\n        conn = await self.pool.acquire()\n        try:\n            yield conn\n        finally:\n            await self.pool.release(conn)\n    \n    async def execute(self, query: str, *args):\n        async with self.acquire() as conn:\n            return await conn.execute(query, *args)\n    \n    async def fetch(self, query: str, *args):\n        async with self.acquire() as conn:\n            return await conn.fetch(query, *args)\n    \n    async def fetchone(self, query: str, *args):\n        async with self.acquire() as conn:\n            return await conn.fetchrow(query, *args)",
+      "tags": ["python", "database", "async", "postgresql"],
+      "difficulty": "advanced",
+      "quality": 96
+    },
+    {
+      "id": "code_062",
+      "category": "testing",
+      "language": "javascript",
+      "title": "Jest 测试工具函数",
+      "description": "通用的测试辅助函数",
+      "code": "import { jest } from '@jest/globals';\n\nexport function createMockModule(modulePath, mocks = {}) {\n  const mockModule = {};\n  const moduleExports = require(modulePath);\n  \n  for (const [key, value] of Object.entries(moduleExports)) {\n    if (typeof value === 'function') {\n      mockModule[key] = jest.fn().mockImplementation((...args) => {\n        if (mocks[key]) {\n          return mocks[key](...args);\n        }\n        return Promise.resolve(null);\n      });\n    } else {\n      mockModule[key] = value;\n    }\n  }\n  \n  jest.doMock(modulePath, () => mockModule);\n  return mockModule;\n}\n\nexport function createTestUser(overrides = {}) {\n  return {\n    id: 'test-user-id',\n    email: 'test@example.com',\n    name: 'Test User',\n    role: 'user',\n    ...overrides\n  };\n}\n\nexport async function waitFor(condition, timeout = 5000, interval = 100) {\n  const start = Date.now();\n  while (Date.now() - start < timeout) {\n    if (await condition()) return true;\n    await new Promise(resolve => setTimeout(resolve, interval));\n  }\n  throw new Error('Timeout waiting for condition');\n}",
+      "tags": ["javascript", "testing", "jest", "mock"],
+      "difficulty": "intermediate",
+      "quality": 93
+    },
+    {
+      "id": "code_063",
+      "category": "security",
+      "language": "python",
+      "title": "密码哈希工具",
+      "description": "安全的密码处理",
+      "code": "import bcrypt\nimport secrets\nimport hashlib\nfrom typing import Optional\n\nclass PasswordHasher:\n    def __init__(self, rounds: int = 12):\n        self.rounds = rounds\n    \n    def hash(self, password: str) -> str:\n        salt = bcrypt.gensalt(rounds=self.rounds)\n        hashed = bcrypt.hashpw(password.encode('utf-8'), salt)\n        return hashed.decode('utf-8')\n    \n    def verify(self, password: str, hashed: str) -> bool:\n        try:\n            return bcrypt.checkpw(\n                password.encode('utf-8'),\n                hashed.encode('utf-8')\n            )\n        except Exception:\n            return False\n    \n    def generate_reset_token(self) -> str:\n        return secrets.token_urlsafe(32)\n    \n    def hash_token(self, token: str) -> str:\n        return hashlib.sha256(token.encode()).hexdigest()\n    \n    def verify_token(self, token: str, hashed: str) -> bool:\n        return secrets.compare_digest(self.hash_token(token), hashed)\n\nhasher = PasswordHasher()\nhashed = hasher.hash('secure_password123')\nis_valid = hasher.verify('secure_password123', hashed)",
+      "tags": ["python", "security", "password", "bcrypt"],
+      "difficulty": "intermediate",
+      "quality": 97
+    },
+    {
+      "id": "code_064",
+      "category": "performance",
+      "language": "python",
+      "title": "性能分析装饰器",
+      "description": "函数性能监控",
+      "code": "import time\nimport functools\nfrom typing import Callable\nimport logging\n\ndef profile(func: Callable = None, *, threshold: float = 1.0):\n    def decorator(func: Callable):\n        @functools.wraps(func)\n        def wrapper(*args, **kwargs):\n            start = time.perf_counter()\n            result = func(*args, **kwargs)\n            end = time.perf_counter()\n            elapsed = end - start\n            \n            if elapsed > threshold:\n                logging.warning(\n                    f\"Slow function: {func.__name__} \"\n                    f\"took {elapsed:.3f}s (threshold: {threshold}s)\"\n                )\n            \n            return result\n        return wrapper\n    \n    if func:\n        return decorator(func)\n    return decorator\n\ndef count_calls(func: Callable):\n    @functools.wraps(func)\n    def wrapper(*args, **kwargs):\n        wrapper.call_count += 1\n        return func(*args, **kwargs)\n    wrapper.call_count = 0\n    return wrapper\n\n@profile(threshold=0.5)\ndef slow_function():\n    time.sleep(0.6)\n\n@count_calls\ndef my_function():\n    pass",
+      "tags": ["python", "performance", "profiling", "decorator"],
+      "difficulty": "intermediate",
+      "quality": 94
+    },
+    {
+      "id": "code_065",
+      "category": "utility",
+      "language": "javascript",
+      "title": "日期工具函数",
+      "description": "常用日期操作",
+      "code": "export const dateUtils = {\n  format(date, format = 'YYYY-MM-DD') {\n    const d = new Date(date);\n    const year = d.getFullYear();\n    const month = String(d.getMonth() + 1).padStart(2, '0');\n    const day = String(d.getDate()).padStart(2, '0');\n    const hours = String(d.getHours()).padStart(2, '0');\n    const minutes = String(d.getMinutes()).padStart(2, '0');\n    const seconds = String(d.getSeconds()).padStart(2, '0');\n    \n    return format\n      .replace('YYYY', year)\n      .replace('MM', month)\n      .replace('DD', day)\n      .replace('HH', hours)\n      .replace('mm', minutes)\n      .replace('ss', seconds);\n  },\n  \n  addDays(date, days) {\n    const result = new Date(date);\n    result.setDate(result.getDate() + days);\n    return result;\n  },\n  \n  isBetween(date, start, end) {\n    const d = new Date(date).getTime();\n    return d >= new Date(start).getTime() && d <= new Date(end).getTime();\n  },\n  \n  diffDays(date1, date2) {\n    const msPerDay = 24 * 60 * 60 * 1000;\n    return Math.floor(Math.abs(date1 - date2) / msPerDay);\n  },\n  \n  startOfDay(date) {\n    const d = new Date(date);\n    d.setHours(0, 0, 0, 0);\n    return d;\n  },\n  \n  endOfDay(date) {\n    const d = new Date(date);\n    d.setHours(23, 59, 59, 999);\n    return d;\n  }\n};",
+      "tags": ["javascript", "date", "utility", "formatting"],
+      "difficulty": "beginner",
+      "quality": 92
+    },
+    {
+      "id": "code_066",
+      "category": "database",
+      "language": "sql",
+      "title": "SQL 查询优化",
+      "description": "高效的 SQL 查询模式",
+      "code": "-- 使用 CTE 提高可读性\nWITH active_users AS (\n    SELECT id, name, email\n    FROM users\n    WHERE status = 'active'\n    AND last_login > NOW() - INTERVAL '30 days'\n),\nuser_orders AS (\n    SELECT \n        u.id as user_id,\n        COUNT(o.id) as order_count,\n        SUM(o.total) as total_spent\n    FROM active_users u\n    LEFT JOIN orders o ON u.id = o.user_id\n    GROUP BY u.id\n)\nSELECT \n    au.name,\n    au.email,\n    COALESCE(uo.order_count, 0) as orders,\n    COALESCE(uo.total_spent, 0) as spent\nFROM active_users au\nLEFT JOIN user_orders uo ON au.id = uo.user_id\nORDER BY spent DESC\nLIMIT 100;\n\n-- 创建索引\nCREATE INDEX idx_users_active ON users(status, last_login);\nCREATE INDEX idx_orders_user ON orders(user_id, created_at);",
+      "tags": ["sql", "database", "optimization", "postgresql"],
+      "difficulty": "intermediate",
+      "quality": 95
+    },
+    {
+      "id": "code_067",
+      "category": "testing",
+      "language": "python",
+      "title": "Pytest Fixture",
+      "description": "测试夹具配置",
+      "code": "import pytest\nfrom sqlalchemy import create_engine\nfrom sqlalchemy.orm import sessionmaker\nfrom fastapi.testclient import TestClient\nfrom app.main import app\nfrom app.database import Base, get_db\n\n@pytest.fixture(scope='session')\ndef test_engine():\n    engine = create_engine('sqlite:///:memory:')\n    Base.metadata.create_all(engine)\n    yield engine\n    Base.metadata.drop_all(engine)\n\n@pytest.fixture\ndef db_session(test_engine):\n    TestingSessionLocal = sessionmaker(bind=test_engine)\n    session = TestingSessionLocal()\n    try:\n        yield session\n    finally:\n        session.close()\n\n@pytest.fixture\ndef client(db_session):\n    def override_get_db():\n        try:\n            yield db_session\n        finally:\n            pass\n    \n    app.dependency_overrides[get_db] = override_get_db\n    with TestClient(app) as test_client:\n        yield test_client\n    \n    app.dependency_overrides.clear()\n\n@pytest.fixture\ndef test_user(client):\n    user_data = {'email': 'test@example.com', 'password': 'test123'}\n    response = client.post('/users', json=user_data)\n    return response.json()",
+      "tags": ["python", "testing", "pytest", "fixture"],
+      "difficulty": "advanced",
+      "quality": 96
+    },
+    {
+      "id": "code_068",
+      "category": "security",
+      "language": "javascript",
+      "title": "XSS 防护",
+      "description": "防止跨站脚本攻击",
+      "code": "export const xssUtils = {\n  escapeHtml(text) {\n    const div = document.createElement('div');\n    div.textContent = text;\n    return div.innerHTML;\n  },\n  \n  sanitizeHtml(html, allowedTags = []) {\n    const parser = new DOMParser();\n    const doc = parser.parseFromString(html, 'text/html');\n    \n    const removeTags = (node) => {\n      if (node.nodeType === Node.ELEMENT_NODE) {\n        if (!allowedTags.includes(node.tagName.toLowerCase())) {\n          node.replaceWith(...node.childNodes);\n          return;\n        }\n        \n        for (const attr of [...node.attributes]) {\n          if (attr.name.startsWith('on') || attr.name === 'style') {\n            node.removeAttribute(attr.name);\n          }\n        }\n      }\n      \n      for (const child of [...node.childNodes]) {\n        removeTags(child);\n      }\n    };\n    \n    removeTags(doc.body);\n    return doc.body.innerHTML;\n  },\n  \n  validateUrl(url) {\n    try {\n      const parsed = new URL(url);\n      return ['http:', 'https:'].includes(parsed.protocol);\n    } catch {\n      return false;\n    }\n  }\n};",
+      "tags": ["javascript", "security", "xss", "sanitization"],
+      "difficulty": "intermediate",
+      "quality": 95
+    },
+    {
+      "id": "code_069",
+      "category": "performance",
+      "language": "javascript",
+      "title": "虚拟滚动",
+      "description": "大数据列表渲染优化",
+      "code": "function VirtualList({ items, itemHeight, containerHeight }) {\n  const [scrollTop, setScrollTop] = useState(0);\n  \n  const visibleCount = Math.ceil(containerHeight / itemHeight);\n  const startIndex = Math.floor(scrollTop / itemHeight);\n  const endIndex = Math.min(startIndex + visibleCount, items.length);\n  \n  const visibleItems = items.slice(startIndex, endIndex);\n  const totalHeight = items.length * itemHeight;\n  const offsetTop = startIndex * itemHeight;\n  \n  return (\n    <div\n      style={{ height: containerHeight, overflow: 'auto' }}\n      onScroll={e => setScrollTop(e.target.scrollTop)}\n    >\n      <div style={{ height: totalHeight, position: 'relative' }}>\n        <div style={{ position: 'absolute', top: offsetTop }}>\n          {visibleItems.map((item, index) => (\n            <div\n              key={startIndex + index}\n              style={{ height: itemHeight }}\n            >\n              {item}\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}",
+      "tags": ["javascript", "react", "performance", "virtualization"],
+      "difficulty": "advanced",
+      "quality": 94
+    },
+    {
+      "id": "code_070",
+      "category": "utility",
+      "language": "python",
+      "title": "配置加载器",
+      "description": "多环境配置管理",
+      "code": "import os\nimport json\nfrom pathlib import Path\nfrom typing import Any, Dict\nfrom dotenv import load_dotenv\n\nclass ConfigLoader:\n    def __init__(self, env: str = None):\n        self.env = env or os.getenv('ENV', 'development')\n        self.config: Dict[str, Any] = {}\n        load_dotenv(f'.env.{self.env}')\n    \n    def load(self) -> Dict[str, Any]:\n        self.config = {\n            'env': self.env,\n            'debug': self.env == 'development',\n            'database': {\n                'url': os.getenv('DATABASE_URL'),\n                'pool_size': int(os.getenv('DB_POOL_SIZE', '10'))\n            },\n            'redis': {\n                'url': os.getenv('REDIS_URL'),\n            },\n            'jwt': {\n                'secret': os.getenv('JWT_SECRET'),\n                'expires': int(os.getenv('JWT_EXPIRES', '3600'))\n            },\n            'logging': {\n                'level': os.getenv('LOG_LEVEL', 'INFO')\n            }\n        }\n        return self.config\n    \n    def get(self, key: str, default: Any = None) -> Any:\n        keys = key.split('.')\n        value = self.config\n        for k in keys:\n            if isinstance(value, dict):\n                value = value.get(k)\n            else:\n                return default\n        return value if value is not None else default\n\nconfig = ConfigLoader().load()",
+      "tags": ["python", "config", "environment", "utility"],
+      "difficulty": "intermediate",
+      "quality": 93
+    }
+  ]
+}
